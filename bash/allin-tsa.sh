@@ -68,8 +68,8 @@ OCSP_URL=http://ocsp.swissdigicert.ch/sdcs-rubin2
 
 # Create temporary SOAP request
 RANDOM=$$                                       # Seeds the random number generator from PID of script
-INSTANT=$(date +%Y-%m-%dT%H:%M:%S%:z)           # Define instant and transaction id
-TRANSID=AP.TEST.$((RANDOM%89999+10000)).$((RANDOM%8999+1000))
+INSTANT=$(date +%Y-%m-%dT%H:%M:%S%:z)           # Define instant and request id
+REQUESTID=ALLIN.TEST.$((RANDOM%89999+10000)).$((RANDOM%8999+1000))
 SOAP_REQ=$(mktemp /tmp/_tmp.XXXXXX)             # SOAP Request goes here
 TIMEOUT_CON=90                                  # Timeout of the client connection
 
@@ -102,7 +102,7 @@ cat > $SOAP_REQ <<End
     <ais:sign xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
      xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
      xmlns:ais="http://service.ais.swisscom.com/">
-      <SignRequest Profile="urn:com:swisscom:dss:v1.0">
+      <SignRequest Profile="urn:com:swisscom:dss:v1.0" RequestID="$REQUESTID">
         <InputDocuments>
           <DocumentHash>
             <dsig:DigestMethod Algorithm="$DIGEST_ALGO"/>
