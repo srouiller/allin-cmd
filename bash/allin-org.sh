@@ -12,7 +12,7 @@
 ######################################################################
 
 # AP_ID used to identify to Allin (provided by Swisscom)
-AP_ID=cartel.ch:kp1-cartel.ch
+AP_ID=cartel.ch:kp2-cartel.ch
 
 ######################################################################
 # There should be no need to change anything below
