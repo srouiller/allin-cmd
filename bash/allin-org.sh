@@ -157,6 +157,7 @@ if [ "$RC" = "0" -a "$http_code" -eq 200 ]; then
   fi
 
   ## TODO
+  openssl x509 -in $SOAP_REQ.sig.cert -noout -text
   echo "Signer subject: $RES_ID_CERT"
   echo "Result Major: $RES_MAJ"
   echo "Result Minor: $RES_MIN"
