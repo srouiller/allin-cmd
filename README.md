@@ -49,6 +49,12 @@ Usage: ./allin-ondemand.sh <args> type hash
 
 The files `mycert.crt`and `mycert.key` are placeholders without any valid content. Be sure to adjust them with your client certificate content in order to connect to the Mobile ID service.
 
+To create the digest/hast to be signed, here some examples with openssl:
+```
+  openssl dgst -binary -sha256 myfile.txt | base64
+  openssl dgst -binary -sha512 myfile.txt | base64
+```
+
 Refer to the "All-In - SOAP client reference guide" document from Swisscom for more details.
 
 
