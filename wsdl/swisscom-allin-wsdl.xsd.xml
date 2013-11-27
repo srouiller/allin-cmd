@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://server.ais.swisscom.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://service.ais.swisscom.com/" name="DigitalSignatureServiceService" targetNamespace="http://server.ais.swisscom.com/">
+  <wsdl:import location="http://ais.pre.swissdigicert.ch/DSS-Server/ws?wsdl=IDigitalSignatureService.wsdl" namespace="http://service.ais.swisscom.com/">
+    </wsdl:import>
+  <wsdl:binding name="DigitalSignatureServiceServiceSoapBinding" type="ns1:IDigitalSignatureService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="pending">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="pending">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="pendingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sign">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sign">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="signResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DigitalSignatureServiceService">
+    <wsdl:port binding="tns:DigitalSignatureServiceServiceSoapBinding" name="DigitalSignatureServicePort">
+      <soap:address location="http://ais.pre.swissdigicert.ch/DSS-Server/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
