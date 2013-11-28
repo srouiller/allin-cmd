@@ -114,7 +114,8 @@ cat > $SOAP_REQ <<End
             <Name>$AP_ID</Name>
           </ClaimedIdentity>
           <SignatureType>urn:ietf:rfc:3369</SignatureType>
-          <AddOCSPResponse>urn:ietf:rfc:2560</AddOCSPResponse>
+          <AddOCSPResponse Type="urn:ietf:rfc:2560"/>
+          <AddTimestamp Type="urn:ietf:rfc:3161"/>
         </OptionalInputs>
       </SignRequest>
     </ais:sign>
