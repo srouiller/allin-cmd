@@ -16,8 +16,9 @@ Usage: ./allin-tsa.sh <args> type hash
   -d       - debug mode
   digest   - digest/hash to be signed
   method   - digest method (SHA224, SHA256, SHA384, SHA512)
+  pkcs7    - output file with PKCS#7 (Crytographic Message Syntax)
 
-  Example ./allin-tsa.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256
+  Example ./allin-tsa.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s
 ```
 
 ```
@@ -26,8 +27,9 @@ Usage: ./allin-org.sh <args> type hash
   -d       - debug mode
   digest   - digest/hash to be signed
   method   - digest method (SHA224, SHA256, SHA384, SHA512)
+  pkcs7    - output file with PKCS#7 (Crytographic Message Syntax)
 
-  Example ./allin-org.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256
+  Example ./allin-org.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s
 ```
 
 ```
@@ -36,14 +38,15 @@ Usage: ./allin-ondemand.sh <args> type hash
   -d       - debug mode
   digest   - digest/hash to be signed
   method   - digest method (SHA224, SHA256, SHA384, SHA512)
+  pkcs7    - output file with PKCS#7 (Crytographic Message Syntax)
   dn       - distinguished name in the ondemand certificate
   <msisdn> - optional Mobile ID step-up
   <msg>    - optional Mobile ID message
   <lang>   - optional Mobile ID language element (EN, DE, FR, IT)
 
-  Example ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 'cn=Hans Muster,o=ACME,c=CH'
-          ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 'cn=Hans Muster,o=ACME,c=CH' +41792080350
-          ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 'cn=Hans Mu
+  Example ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH'
+          ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH' +41792080350
+          ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH' +41792080350 'service.com: Sign?' EN
 ```
 
 
@@ -60,7 +63,16 @@ Refer to the "All-In - SOAP client reference guide" document from Swisscom for m
 
 Example of verbose outputs:
 ```
-<TODO>
+OK on GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= with following details:
+ Signer subject : subject= /CN=Hans Muster/O=ACME/C=CH
+ Result major   : urn:oasis:names:tc:dss:1.0:resultmajor:Success with exit 0
+```
+
+```
+FAILED on GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= with following details:
+ Result major   : urn:oasis:names:tc:dss:1.0:resultmajor:RequesterError with exit 1
+ Result minor   : urn:com:swisscom:dss:1.0:resultminor:InsufficientData
+ Result message : MSISDN
 ```
 
 

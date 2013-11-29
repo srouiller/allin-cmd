@@ -37,20 +37,21 @@ while getopts "dv" opt; do                      # Parse the options
 done
 shift $((OPTIND-1))                             # Remove the options
 
-if [ $# -lt 3 ]; then                           # Parse the rest of the arguments
+if [ $# -lt 4 ]; then                           # Parse the rest of the arguments
   echo "Usage: $0 <args> type hash"
   echo "  -v       - verbose output"
   echo "  -d       - debug mode"
   echo "  digest   - digest/hash to be signed"
   echo "  method   - digest method (SHA224, SHA256, SHA384, SHA512)"
+  echo "  pkcs7    - output file with PKCS#7 (Crytographic Message Syntax)"
   echo "  dn       - distinguished name in the ondemand certificate"
   echo "  <msisdn> - optional Mobile ID step-up"
   echo "  <msg>    - optional Mobile ID message"
   echo "  <lang>   - optional Mobile ID language element (EN, DE, FR, IT)"
   echo
-  echo "  Example $0 -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 'cn=Hans Muster,o=ACME,c=CH'"
-  echo "          $0 -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 'cn=Hans Muster,o=ACME,c=CH' +41792080350"
-  echo "          $0 -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 'cn=Hans Muster,o=ACME,c=CH' +41792080350 'service.com: Sign?' EN"
+  echo "  Example $0 -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH'"
+  echo "          $0 -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH' +41792080350"
+  echo "          $0 -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH' +41792080350 'service.com: Sign?' EN"
   echo 
   exit 1
 fi
@@ -100,15 +101,19 @@ case "$DIGEST_METHOD" in
     ;;
 esac
 
+# Target file
+PKCS7_RESULT=$3
+[ -f "$PKCS7_RESULT" ] && error "Target file $PKCS7_RESULT already exists"
+
 # OnDemand distinguished name
-ONDEMAND_DN=$3
+ONDEMAND_DN=$4
 
 # Optional step up with Mobile ID
 MID=""                                          # MobileID step up by default off
-MID_MSISDN=$4                                   # MSISDN
-MID_MSG=$5                                      # Optional DTBS
+MID_MSISDN=$5                                   # MSISDN
+MID_MSG=$6                                      # Optional DTBS
 [ "$MID_MSG" = "" ] && MID_MSG="Sign it?"
-MID_LANG=$6                                     # Optional Language
+MID_LANG=$7                                     # Optional Language
 [ "$MID_LANG" = "" ] && MID_LANG="EN"
 if [ "$MID_MSISDN" != "" ]; then                # MobileID step up?
   MID="<ns5:StepUpAuthorisation><ns5:MobileID><ns5:MSISDN>$MID_MSISDN</ns5:MSISDN><ns5:Message>$MID_MSG</ns5:Message><ns5:Language>$MID_LANG</ns5:Language></ns5:MobileID></ns5:StepUpAuthorisation>"
@@ -141,7 +146,7 @@ cat > $SOAP_REQ <<End
             <ns5:DistinguishedName>$ONDEMAND_DN</ns5:DistinguishedName>
             $MID
           </ns5:CertificateRequest>
-          <AddOCSPResponse Type="urn:ietf:rfc:2560"/>
+          <AddOcspResponse Type="urn:ietf:rfc:2560"/>
           <AddTimestamp Type="urn:ietf:rfc:3161"/>
         </OptionalInputs>
       </SignRequest>
@@ -172,34 +177,45 @@ if [ "$RC" = "0" -a "$http_code" -eq 200 ]; then
   # Parse the response xml
   RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $SOAP_REQ.res)
   RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $SOAP_REQ.res)
-  sed -n -e 's/.*<Base64Signature Type="urn:ietf:rfc:3369">\(.*\)<\/Base64Signature>.*/\1/p' $SOAP_REQ.res > $SOAP_REQ.sig
+  RES_MSG=$(sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p' $SOAP_REQ.res)
+  sed -n -e 's/.*<Base64Signature.*>\(.*\)<\/Base64Signature>.*/\1/p' $SOAP_REQ.res > $SOAP_REQ.sig
 
   if [ -s "${SOAP_REQ}.sig" ]; then
     # Decode signature if present
     base64 --decode  $SOAP_REQ.sig > $SOAP_REQ.sig.decoded
     [ -s "${SOAP_REQ}.sig.decoded" ] || error "Unable to decode Base64Signature"
+    # Save PKCS7 content to target
+    openssl pkcs7 -inform der -in $SOAP_REQ.sig.decoded -out $PKCS7_RESULT
     # Extract the signers certificate
     openssl pkcs7 -inform der -in $SOAP_REQ.sig.decoded -out $SOAP_REQ.sig.cert -print_certs
     [ -s "${SOAP_REQ}.sig.cert" ] || error "Unable to extract signers certificate from signature"
     RES_ID_CERT=$(openssl x509 -subject -noout -in $SOAP_REQ.sig.cert)
   fi
 
-  ## TODO
-  [ -f "$SOAP_REQ.sig.cert" ] && openssl x509 -in $SOAP_REQ.sig.cert -noout -text
-  echo "Signer subject: $RES_ID_CERT"
-  echo "Result Major: $RES_MAJ"
-  echo "Result Minor: $RES_MIN"
-
+  # Status and results
+  if [ "$RES_MAJ" = "urn:oasis:names:tc:dss:1.0:resultmajor:Success" ]; then
+    RC=0                                                # Ok
+    if [ "$VERBOSE" = "1" ]; then                       # Verbose details
+      echo "OK on $DIGEST_VALUE with following details:"
+      echo " Signer subject : $RES_ID_CERT"
+      echo " Result major   : $RES_MAJ with exit $RC"
+    fi
+   else
+    RC=1                                                # Failure
+    if [ "$VERBOSE" = "1" ]; then                       # Verbose details
+      echo "FAILED on $DIGEST_VALUE with following details:"
+      echo " Result major   : $RES_MAJ with exit $RC"
+      echo " Result minor   : $RES_MIN"
+      echo " Result message : $RES_MSG"
+    fi
+  fi
  else
   CURL_ERR=$RC                                          # Keep related error
   export RC=2                                           # Force returned error code
   if [ "$VERBOSE" = "1" ]; then                         # Verbose details
-    [ $CURL_ERR != "0" ] && echo "curl failed with $CURL_ERR"   # Curl error
-    if [ -s "${SOAP_REQ}.res" ]; then                           # Response from the service
-      RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $SOAP_REQ.res)
-      RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $SOAP_REQ.res)
-      echo "FAILED on $DIGEST_VALUE with $RES_MAJ:$RES_MIN and exit $RC"
-    fi
+    echo "FAILED on $DIGEST_VALUE with following details:"
+    echo " curl error : $CURL_ERR"
+    echo " http error : $http_code"
   fi
 fi
 
