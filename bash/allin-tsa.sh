@@ -47,7 +47,7 @@ shift $((OPTIND-1))                             # Remove the options
 
 if [ $# -lt 3 ]; then                           # Parse the rest of the arguments
   echo "Usage: $0 <args> digest method pkcs7"
-  echo "  -t value  - sets the message type (acceptable values: SOAP, XML, JSON)"
+  echo "  -t value  - sets the message type (SOAP, XML, JSON)"
   echo "  -v        - verbose output"
   echo "  -d        - debug mode"
   echo "  digest    - digest/hash to be signed"
