@@ -11,14 +11,15 @@ Contains a script to invoke the:
 * OnDemand Signature REquest
 
 ```
-Usage: ./allin-tsa.sh <args> type hash
-  -v       - verbose output
-  -d       - debug mode
-  digest   - digest/hash to be signed
-  method   - digest method (SHA224, SHA256, SHA384, SHA512)
-  pkcs7    - output file with PKCS#7 (Crytographic Message Syntax)
+Usage: ./allin-tsa.sh <args> digest method pkcs7
+  -t value  - sets the message type (SOAP, XML, JSON)
+  -v        - verbose output
+  -d        - debug mode
+  digest    - digest/hash to be signed
+  method    - digest method (SHA224, SHA256, SHA384, SHA512)
+  pkcs7     - output file with PKCS#7 (Crytographic Message Syntax)
 
-  Example ./allin-tsa.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s
+  Example ./allin-tsa.sh -t JSON -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s
 ```
 
 ```
