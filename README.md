@@ -44,10 +44,10 @@ Usage: ./allin-ondemand.sh <args> digest method pkcs7 dn <msisdn> <msg> <lang>
   digest    - digest/hash to be signed
   method    - digest method (SHA224, SHA256, SHA384, SHA512)
   pkcs7     - output file with PKCS#7 (Crytographic Message Syntax)
-  dn       - distinguished name in the ondemand certificate
-  <msisdn> - optional Mobile ID step-up
-  <msg>    - optional Mobile ID message
-  <lang>   - optional Mobile ID language element (EN, DE, FR, IT)
+  dn        - distinguished name in the ondemand certificate
+  <msisdn>  - optional Mobile ID step-up
+  <msg>     - optional Mobile ID message
+  <lang>    - optional Mobile ID language element (EN, DE, FR, IT)
 
   Example ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH'
           ./allin-ondemand.sh -v -t JSON GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH'
