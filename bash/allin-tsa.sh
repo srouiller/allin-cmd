@@ -47,14 +47,15 @@ shift $((OPTIND-1))                             # Remove the options
 
 if [ $# -lt 3 ]; then                           # Parse the rest of the arguments
   echo "Usage: $0 <args> digest method pkcs7"
-  echo "  -t value  - sets the message type (SOAP, XML, JSON)"
+  echo "  -t value  - message type (SOAP, XML, JSON), default SOAP"
   echo "  -v        - verbose output"
   echo "  -d        - debug mode"
   echo "  digest    - digest/hash to be signed"
   echo "  method    - digest method (SHA224, SHA256, SHA384, SHA512)"
   echo "  pkcs7     - output file with PKCS#7 (Crytographic Message Syntax)"
   echo
-  echo "  Example $0 -t JSON -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s"
+  echo "  Examples $0 GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s"
+  echo "           $0 -t JSON -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s"
   echo 
   exit 1
 fi
