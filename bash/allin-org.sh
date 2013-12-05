@@ -141,6 +141,8 @@ case "$MSGTYPE" in
                 <Name>'$AP_ID'</Name>
             </ClaimedIdentity>
             <SignatureType>urn:ietf:rfc:3369</SignatureType>
+            <AddOcspResponse Type="urn:ietf:rfc:2560"/>
+            <AddTimestamp Type="urn:ietf:rfc:3161"/>
         </OptionalInputs>
         <InputDocuments>
             <DocumentHash>
