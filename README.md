@@ -24,14 +24,16 @@ Usage: ./allin-tsa.sh <args> digest method pkcs7
 ```
 
 ```
-Usage: ./allin-org.sh <args> type hash
-  -v       - verbose output
-  -d       - debug mode
-  digest   - digest/hash to be signed
-  method   - digest method (SHA224, SHA256, SHA384, SHA512)
-  pkcs7    - output file with PKCS#7 (Crytographic Message Syntax)
+Usage: ./allin-org.sh <args> digest method pkcs7
+  -t value  - message type (SOAP, XML, JSON), default SOAP
+  -v        - verbose output
+  -d        - debug mode
+  digest    - digest/hash to be signed
+  method    - digest method (SHA224, SHA256, SHA384, SHA512)
+  pkcs7     - output file with PKCS#7 (Crytographic Message Syntax)
 
-  Example ./allin-org.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s
+  Examples ./allin-org.sh GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s
+           ./allin-org.sh -t JSON -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s
 ```
 
 ```
