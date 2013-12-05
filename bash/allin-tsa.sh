@@ -2,7 +2,7 @@
 # allin-tsa.sh - 1.1
 #
 # Generic script using curl to invoke Swisscom Allin service: TSA
-# Dependencies: curl, openssl, base64, sed, date, xmllint, tr
+# Dependencies: curl, openssl, base64, sed, date, xmllint, tr, python
 #
 # Change Log:
 #  1.0 26.11.2013: Initial version
@@ -58,7 +58,7 @@ fi
 PWD=$(dirname $0)                               # Get the Path of the script
 
 # Check the dependencies
-for cmd in curl openssl base64 sed date xmllint tr; do
+for cmd in curl openssl base64 sed date xmllint tr python; do
   hash $cmd &> /dev/null
   if [ $? -eq 1 ]; then error "Dependency error: '$cmd' not found" ; fi
 done
@@ -84,151 +84,153 @@ DIGEST_VALUE=$1                                 # Hash to be signed
 DIGEST_METHOD=$2                                # Digest method
 case "$DIGEST_METHOD" in
   SHA224)
-    DIGEST_ALGO='http://www.w3.org/2001/04/xmldsig-more#sha224'
-    ;;
+    DIGEST_ALGO='http://www.w3.org/2001/04/xmldsig-more#sha224' ;;
   SHA256)
-    DIGEST_ALGO='http://www.w3.org/2001/04/xmlenc#sha256'
-    ;;
+    DIGEST_ALGO='http://www.w3.org/2001/04/xmlenc#sha256' ;;
   SHA384)
-    DIGEST_ALGO='http://www.w3.org/2001/04/xmldsig-more#sha384'
-    ;;
+    DIGEST_ALGO='http://www.w3.org/2001/04/xmldsig-more#sha384' ;;
   SHA512)
-    DIGEST_ALGO='http://www.w3.org/2001/04/xmlenc#sha512'
-    ;;
+    DIGEST_ALGO='http://www.w3.org/2001/04/xmlenc#sha512' ;;
   *)
-    error "Unsupported digest method $DIGEST_METHOD, check with $0"
-    ;;
+    error "Unsupported digest method $DIGEST_METHOD, check with $0" ;;
 esac
 
 # Target file
 PKCS7_RESULT=$3
 [ -f "$PKCS7_RESULT" ] && error "Target file $PKCS7_RESULT already exists"
 
-# Define the SOAP Request
-if [ "$MSGTYPE" = "SOAP" ]; then
-  REQ_SOAP='<?xml version="1.0" encoding="UTF-8"?>
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-    <soap:Body>
-      <ais:sign xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
-                xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-                xmlns:ais="http://service.ais.swisscom.com/">
-        <SignRequest Profile="urn:com:swisscom:dss:v1.0" RequestID="'$REQUESTID'">
-          <InputDocuments>
-            <DocumentHash>
-              <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
-              <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
-            </DocumentHash>
-          </InputDocuments>
-          <OptionalInputs>
-            <ClaimedIdentity Format="urn:com:swisscom:dss:v1.0:entity">
-              <Name>'$AP_ID'</Name>
+case "$MSGTYPE" in
+  # MessageType is SOAP. Define the Request
+  SOAP)
+    REQ_SOAP='<?xml version="1.0" encoding="UTF-8"?>
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+        <ais:sign xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
+                  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
+                  xmlns:ais="http://service.ais.swisscom.com/">
+          <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0">
+            <InputDocuments>
+              <DocumentHash>
+                <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
+                <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
+              </DocumentHash>
+            </InputDocuments>
+            <OptionalInputs>
+              <ClaimedIdentity Format="urn:com:swisscom:dss:v1.0:entity">
+                <Name>'$AP_ID'</Name>
+              </ClaimedIdentity>
+              <SignatureType>urn:ietf:rfc:3161</SignatureType>
+              <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
+            </OptionalInputs>
+          </SignRequest>
+        </ais:sign>
+      </soap:Body>
+    </soap:Envelope>'
+    # Trim the request and store into file
+    echo "$REQ_SOAP" | tr -d '\n' > $REQ ;;
+
+  # MessageType is XML. Define the Request
+  XML)
+    REQ_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0"
+                 xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" 
+                 xmlns="urn:oasis:names:tc:dss:1.0:core:schema">
+        <OptionalInputs>
+            <ClaimedIdentity>
+                <Name>'$AP_ID'</Name>
             </ClaimedIdentity>
-            <SignatureType>urn:ietf:rfc:3161</SignatureType>
             <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
-          </OptionalInputs>
-        </SignRequest>
-      </ais:sign>
-    </soap:Body>
-  </soap:Envelope>'
-  # Trim the request and store into file
-  echo "$REQ_SOAP" | tr -d '\n' > $REQ
-
-# Define the XML Request
-elif [ "$MSGTYPE" = "XML" ]; then
-  REQ_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-  <SignRequest Profile="urn:com:swisscom:dss:v1.0" 
-               xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" 
-               xmlns="urn:oasis:names:tc:dss:1.0:core:schema">
-      <OptionalInputs>
-          <ClaimedIdentity>
-              <Name>'$AP_ID'</Name>
-          </ClaimedIdentity>
-          <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
-          <SignatureType>urn:ietf:rfc:3161</SignatureType>
-      </OptionalInputs>
-      <InputDocuments>
-          <DocumentHash>
-              <ns2:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
-              <ns2:DigestValue>'$DIGEST_VALUE'</ns2:DigestValue>
-          </DocumentHash>
-      </InputDocuments>
-  </SignRequest>'
-  # Trim the request and store into file
-  echo "$REQ_XML" | tr -d '\n' > $REQ
-
-# Define the JSON Request
-elif [ "$MSGTYPE" = "JSON" ]; then
-  REQ_JSON='{"dss.SignRequest": {
-      "@Profile": "urn:com:swisscom:dss:v1.0",
-      "dss.OptionalInputs": {
-          "dss.ClaimedIdentity": {"dss.Name": "'$AP_ID'"},
-          "dss.AdditionalProfile": "urn:oasis:names:tc:dss:1.0:profiles:timestamping",
-          "dss.SignatureType": "urn:ietf:rfc:3161"
-      },
-      "dss.InputDocuments": {"dss.DocumentHash": {
-          "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},
-          "xmldsig.DigestValue": "'$DIGEST_VALUE'"
-      }}
-  }}'
-  # Trim the request and store into file
-  echo "$REQ_JSON" | tr -d '\n ' > $REQ
-
-# Unknown request type
-else
-  error "Unsupported request type $MSGTYPE, check with $0"
-
-fi
+            <SignatureType>urn:ietf:rfc:3161</SignatureType>
+        </OptionalInputs>
+        <InputDocuments>
+            <DocumentHash>
+                <ns2:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
+                <ns2:DigestValue>'$DIGEST_VALUE'</ns2:DigestValue>
+            </DocumentHash>
+        </InputDocuments>
+    </SignRequest>'
+    # Trim the request and store into file
+    echo "$REQ_XML" | tr -d '\n' > $REQ ;;
+    
+  # MessageType is JSON. Define the Request
+  JSON)
+    REQ_JSON='{
+    "dss.SignRequest": {
+        "@RequestID": "'$REQUESTID'",
+        "@Profile": "urn:com:swisscom:dss:v1.0",
+        "dss.OptionalInputs": {
+            "dss.ClaimedIdentity": {"dss.Name": "'$AP_ID'"},
+            "dss.AdditionalProfile": "urn:oasis:names:tc:dss:1.0:profiles:timestamping",
+            "dss.SignatureType": "urn:ietf:rfc:3161"
+        },
+        "dss.InputDocuments": {"dss.DocumentHash": {
+            "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},
+            "xmldsig.DigestValue": "'$DIGEST_VALUE'"
+          }
+        }
+      }
+    }'
+    # Trim the request and store into file
+    echo "$REQ_JSON" | tr -d '\n ' > $REQ ;;
+    
+  # Unknown message type
+  *)
+    error "Unsupported message type $MSGTYPE, check with $0" ;;
+    
+esac
 
 # Check existence of needed files
-[ -r "${SSL_CA}" ]   || error "CA certificate/chain file ($CERT_CA) missing or not readable"
+[ -r "${SSL_CA}" ]    || error "CA certificate/chain file ($CERT_CA) missing or not readable"
 [ -r "${CERT_KEY}" ]  || error "SSL key file ($CERT_KEY) missing or not readable"
 [ -r "${CERT_FILE}" ] || error "SSL certificate file ($CERT_FILE) missing or not readable"
 [ -r "${OCSP_CERT}" ] || error "OCSP certificate file ($OCSP_CERT) missing or not readable"
 
 # Define cURL Options according to Message Type
-if [ "$MSGTYPE" = "SOAP" ]; then
-  URL=https://ais.pre.swissdigicert.ch/DSS-Server/ws
-  HEADER_ACCEPT="Accept: application/xml"
-  HEADER_CONTENT_TYPE="Content-Type: text/xml; charset=utf-8"
-  CURL_OPTIONS="--data"
-elif [ "$MSGTYPE" = "XML" ]; then
-  URL=https://ais.pre.swissdigicert.ch/DSS-Server/rs/v1.0/sign
-  HEADER_ACCEPT="Accept: application/xml"
-  HEADER_CONTENT_TYPE="Content-Type: application/xml"
-  CURL_OPTIONS="--request POST --data"
-elif [ "$MSGTYPE" = "JSON" ]; then
-  URL=https://ais.pre.swissdigicert.ch/DSS-Server/rs/v1.0/sign
-  HEADER_ACCEPT="Accept: application/json"
-  HEADER_CONTENT_TYPE="Content-Type: application/json"
-  CURL_OPTIONS="--request POST --data-binary"
-fi
+case "$MSGTYPE" in
+  SOAP)
+    URL=https://ais.pre.swissdigicert.ch/DSS-Server/ws
+    HEADER_ACCEPT="Accept: application/xml"
+    HEADER_CONTENT_TYPE="Content-Type: text/xml; charset=utf-8"
+    CURL_OPTIONS="--data" ;;
+  XML)
+    URL=https://ais.pre.swissdigicert.ch/DSS-Server/rs/v1.0/sign
+    HEADER_ACCEPT="Accept: application/xml"
+    HEADER_CONTENT_TYPE="Content-Type: application/xml"
+    CURL_OPTIONS="--request POST --data" ;;
+  JSON)
+    URL=https://ais.pre.swissdigicert.ch/DSS-Server/rs/v1.0/sign
+    HEADER_ACCEPT="Accept: application/json"
+    HEADER_CONTENT_TYPE="Content-Type: application/json"
+    CURL_OPTIONS="--request POST --data-binary" ;;
+esac
 
 # Call the service
 http_code=$(curl --write-out '%{http_code}\n' --sslv3 --silent \
-    $CURL_OPTIONS @$REQ \
-    --header "${HEADER_ACCEPT}" --header "${HEADER_CONTENT_TYPE}" \
-    --cert $CERT_FILE --cacert $SSL_CA --key $CERT_KEY \
-    --output $REQ.res --trace-ascii $REQ.log \
-    --connect-timeout $TIMEOUT_CON \
-    $URL)
+  $CURL_OPTIONS @$REQ \
+  --header "${HEADER_ACCEPT}" --header "${HEADER_CONTENT_TYPE}" \
+  --cert $CERT_FILE --cacert $SSL_CA --key $CERT_KEY \
+  --output $REQ.res --trace-ascii $REQ.log \
+  --connect-timeout $TIMEOUT_CON \
+  $URL)
 
 # Results
 export RC=$?
 
 if [ "$RC" = "0" -a "$http_code" = "200" ]; then
-  if [ "$MSGTYPE" = "JSON" ]; then
-    # JSON Parse Result
-    RES_MAJ=$(sed -n -e 's/^.*"dss.ResultMajor":"\([^"]*\)".*$/\1/p' $REQ.res)
-    RES_MIN=$(sed -n -e 's/^.*"dss.ResultMinor":"\([^"]*\)".*$/\1/p' $REQ.res)
-    RES_MSG=$(sed -n -e 's/^.*"dss.ResultMessage":{\([^}]*\)}.*$/\1/p' $REQ.res)
-    sed -n -e 's/^.*"dss.RFC3161TimeStampToken":"\([^"]*\)".*$/\1/p' $REQ.res | sed 's/\\//g' > $REQ.sig
-  else
-    # SOAP/XML Parse Result
-    RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $REQ.res)
-    RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $REQ.res)
-    RES_MSG=$(sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p' $REQ.res)
-    sed -n -e 's/.*<RFC3161TimeStampToken>\(.*\)<\/RFC3161TimeStampToken>.*/\1/p' $REQ.res > $REQ.sig
-  fi
+  case "$MSGTYPE" in
+    SOAP|XML)
+      # SOAP/XML Parse Result
+      RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $REQ.res)
+      RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $REQ.res)
+      RES_MSG=$(sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p' $REQ.res)
+      sed -n -e 's/.*<RFC3161TimeStampToken>\(.*\)<\/RFC3161TimeStampToken>.*/\1/p' $REQ.res > $REQ.sig ;;
+    JSON)
+      # JSON Parse Result
+      RES_MAJ=$(sed -n -e 's/^.*"dss.ResultMajor":"\([^"]*\)".*$/\1/p' $REQ.res)
+      RES_MIN=$(sed -n -e 's/^.*"dss.ResultMinor":"\([^"]*\)".*$/\1/p' $REQ.res)
+      RES_MSG=$(sed -n -e 's/^.*"dss.ResultMessage":{\([^}]*\)}.*$/\1/p' $REQ.res)
+      sed -n -e 's/^.*"dss.RFC3161TimeStampToken":"\([^"]*\)".*$/\1/p' $REQ.res | sed 's/\\//g' > $REQ.sig ;;
+  esac
 
   if [ -s "${REQ}.sig" ]; then
     # Decode signature if present
@@ -271,9 +273,9 @@ fi
 
 # Debug details
 if [ "$DEBUG" != "" ]; then
-  [ -f "$REQ" ] && echo ">>> $REQ <<<" && cat $REQ | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || cat )
+  [ -f "$REQ" ] && echo ">>> $REQ <<<" && cat $REQ | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || python -m json.tool )
   [ -f "$REQ.log" ] && echo ">>> $REQ.log <<<" && cat $REQ.log | grep '==\|error'
-  [ -f "$REQ.res" ] && echo ">>> $REQ.res <<<" && cat $REQ.res | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || cat ) 
+  [ -f "$REQ.res" ] && echo ">>> $REQ.res <<<" && cat $REQ.res | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || python -m json.tool ) 
   echo ""
 fi
 
