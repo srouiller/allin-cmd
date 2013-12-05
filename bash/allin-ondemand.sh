@@ -41,7 +41,7 @@ done
 shift $((OPTIND-1))                             # Remove the options
 
 if [ $# -lt 4 ]; then                           # Parse the rest of the arguments
-  echo "Usage: $0 <args> digest method pkcs7"
+  echo "Usage: $0 <args> digest method pkcs7 dn <msisdn> <msg> <lang>"
   echo "  -t value  - message type (SOAP, XML, JSON), default SOAP"
   echo "  -v        - verbose output"
   echo "  -d        - debug mode"

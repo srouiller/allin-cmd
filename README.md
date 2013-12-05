@@ -37,7 +37,7 @@ Usage: ./allin-org.sh <args> digest method pkcs7
 ```
 
 ```
-Usage: ./allin-ondemand.sh <args> digest method pkcs7
+Usage: ./allin-ondemand.sh <args> digest method pkcs7 dn <msisdn> <msg> <lang>
   -t value  - message type (SOAP, XML, JSON), default SOAP
   -v        - verbose output
   -d        - debug mode
