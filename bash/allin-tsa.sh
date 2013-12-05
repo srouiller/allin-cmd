@@ -32,12 +32,7 @@ DEBUG=
 VERBOSE=
 while getopts "dvt:" opt; do
   case $opt in
-    t) case "$OPTARG" in 
-         SOAP|JSON|XML) MSGTYPE=$OPTARG ;;      # Acceptable Message Type
-         *) echo "Illegal message type $OPTARG"                   # Wrong Message Type
-            exit 1 ;; 
-       esac 
-       ;;
+    t) MSGTYPE=$OPTARG ;;
     d) DEBUG=1 ;;
     v) VERBOSE=1 ;; 
   esac
@@ -177,6 +172,10 @@ elif [ "$MSGTYPE" = "JSON" ]; then
   }}'
   # Trim the request and store into file
   echo "$REQ_JSON" | tr -d '\n ' > $REQ
+
+# Unknown request type
+else
+  error "Unsupported request type $MSGTYPE, check with $0"
 
 fi
 
