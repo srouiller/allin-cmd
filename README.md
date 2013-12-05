@@ -37,18 +37,20 @@ Usage: ./allin-org.sh <args> digest method pkcs7
 ```
 
 ```
-Usage: ./allin-ondemand.sh <args> type hash
-  -v       - verbose output
-  -d       - debug mode
-  digest   - digest/hash to be signed
-  method   - digest method (SHA224, SHA256, SHA384, SHA512)
-  pkcs7    - output file with PKCS#7 (Crytographic Message Syntax)
+Usage: ./allin-ondemand.sh <args> digest method pkcs7
+  -t value  - message type (SOAP, XML, JSON), default SOAP
+  -v        - verbose output
+  -d        - debug mode
+  digest    - digest/hash to be signed
+  method    - digest method (SHA224, SHA256, SHA384, SHA512)
+  pkcs7     - output file with PKCS#7 (Crytographic Message Syntax)
   dn       - distinguished name in the ondemand certificate
   <msisdn> - optional Mobile ID step-up
   <msg>    - optional Mobile ID message
   <lang>   - optional Mobile ID language element (EN, DE, FR, IT)
 
   Example ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH'
+          ./allin-ondemand.sh -v -t JSON GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH'
           ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH' +41792080350
           ./allin-ondemand.sh -v GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA= SHA256 result.p7s 'cn=Hans Muster,o=ACME,c=CH' +41792080350 'service.com: Sign?' EN
 ```
