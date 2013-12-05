@@ -190,6 +190,8 @@ case "$MSGTYPE" in
                 <ns5:DistinguishedName>'$ONDEMAND_DN'</ns5:DistinguishedName>
                 '$MID'
             </ns5:CertificateRequest>
+            <AddOcspResponse Type="urn:ietf:rfc:2560"/>
+            <AddTimestamp Type="urn:ietf:rfc:3161"/>
         </OptionalInputs>
         <InputDocuments>
             <DocumentHash>
