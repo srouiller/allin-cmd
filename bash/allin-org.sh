@@ -163,6 +163,7 @@ case "$MSGTYPE" in
         "dss.OptionalInputs": {
             "dss.ClaimedIdentity": {"dss.Name": "'$AP_ID'"},
             "dss.SignatureType": "urn:ietf:rfc:3369",
+            "sc.AddOcspResponse": {"@Type": "urn:ietf:rfc:2560"},
             "dss.AddTimestamp": { "@Type": "urn:ietf:rfc:3161" }
         },
         "dss.InputDocuments": {"dss.DocumentHash": {
