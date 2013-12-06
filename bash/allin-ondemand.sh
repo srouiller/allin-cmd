@@ -216,7 +216,8 @@ case "$MSGTYPE" in
           "sc.CertificateRequest": {
             "sc.DistinguishedName": "'$ONDEMAND_DN'" 
             '$MID'
-            }
+            },
+          "dss.AddTimestamp": { "@Type": "urn:ietf:rfc:3161" }
           },
         "dss.InputDocuments": {"dss.DocumentHash": {
           "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},

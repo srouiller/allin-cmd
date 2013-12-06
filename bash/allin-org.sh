@@ -162,7 +162,8 @@ case "$MSGTYPE" in
         "@Profile": "urn:com:swisscom:dss:v1.0",
         "dss.OptionalInputs": {
             "dss.ClaimedIdentity": {"dss.Name": "'$AP_ID'"},
-            "dss.SignatureType": "urn:ietf:rfc:3369"
+            "dss.SignatureType": "urn:ietf:rfc:3369",
+            "dss.AddTimestamp": { "@Type": "urn:ietf:rfc:3161" }
         },
         "dss.InputDocuments": {"dss.DocumentHash": {
             "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},
