@@ -217,6 +217,7 @@ case "$MSGTYPE" in
             "sc.DistinguishedName": "'$ONDEMAND_DN'" 
             '$MID'
             },
+          "sc.AddOcspResponse": {"@Type": "urn:ietf:rfc:2560"},
           "dss.AddTimestamp": { "@Type": "urn:ietf:rfc:3161" }
           },
         "dss.InputDocuments": {"dss.DocumentHash": {
