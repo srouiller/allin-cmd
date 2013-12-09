@@ -79,9 +79,8 @@ OCSP_CERT=$PWD/swisscom-ocsp.crt                # OCSP information of the signer
 OCSP_URL=http://ocsp.swissdigicert.ch/sdcs-rubin2
 
 # Create temporary request
-RANDOM=$$                                       # Seeds the random number generator from PID of script
-INSTANT=$(date +%Y-%m-%dT%H:%M:%S%:z)           # Define instant and request id
-REQUESTID=ALLIN.TEST.$((RANDOM%89999+10000)).$((RANDOM%8999+1000))
+INSTANT=$(date +%Y-%m-%dT%H:%M:%S.%N%:z)        # Define instant and request id
+REQUESTID=ALLIN.TEST.$INSTANT
 REQ=$(mktemp /tmp/_tmp.XXXXXX)                  # Request goes here
 TIMEOUT_CON=90                                  # Timeout of the client connection
 
