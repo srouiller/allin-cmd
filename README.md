@@ -8,7 +8,7 @@ All-in command line tools
 Contains a script to invoke the:
 * TSA Signature Request
 * Organization Signature Request
-* OnDemand Signature REquest
+* OnDemand Signature Request
 
 ```
 Usage: ./allin-tsa.sh <args> digest method pkcs7
