@@ -62,8 +62,6 @@ CERT_KEY=$PWD/mycert.key                        # The related key of the certifi
 
 # Swisscom SDCS elements
 SSL_CA=$PWD/allin-ssl.crt                       # Bag file for SSL server connection
-OCSP_CERT=$PWD/swisscom-ocsp.crt                # OCSP information of the signers certificate
-OCSP_URL=http://ocsp.swissdigicert.ch/sdcs-rubin2
 
 # Create temporary SOAP request
 RANDOM=$$                                       # Seeds the random number generator from PID of script
@@ -96,7 +94,6 @@ End
 [ -r "${SSL_CA}" ]   || error "CA certificate/chain file ($CERT_CA) missing or not readable"
 [ -r "${CERT_KEY}" ]  || error "SSL key file ($CERT_KEY) missing or not readable"
 [ -r "${CERT_FILE}" ] || error "SSL certificate file ($CERT_FILE) missing or not readable"
-[ -r "${OCSP_CERT}" ] || error "OCSP certificate file ($OCSP_CERT) missing or not readable"
 
 # Call the service
 SOAP_URL=https://ais.pre.swissdigicert.ch/DSS-Server/ws
