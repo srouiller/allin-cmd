@@ -123,8 +123,8 @@ case "$MSGTYPE" in
         </ais:sign>
       </soap:Body>
     </soap:Envelope>'
-    # Trim the request and store into file
-    echo "$REQ_SOAP" | tr -d '\n' > $REQ ;;
+    # store into file
+    echo "$REQ_SOAP" > $REQ ;;
 
   # MessageType is XML. Define the Request
   XML)
@@ -146,8 +146,8 @@ case "$MSGTYPE" in
             </DocumentHash>
         </InputDocuments>
     </SignRequest>'
-    # Trim the request and store into file
-    echo "$REQ_XML" | tr -d '\n' > $REQ ;;
+    # store into file
+    echo "$REQ_XML" > $REQ ;;
     
   # MessageType is JSON. Define the Request
   JSON)
@@ -161,14 +161,14 @@ case "$MSGTYPE" in
             "dss.SignatureType": "urn:ietf:rfc:3161"
         },
         "dss.InputDocuments": {"dss.DocumentHash": {
-            "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},
+            "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO' sd sd sdf"},
             "xmldsig.DigestValue": "'$DIGEST_VALUE'"
           }
         }
       }
     }'
-    # Trim the request and store into file
-    echo "$REQ_JSON" | tr -d '\n ' > $REQ ;;
+    # store into file
+    echo "$REQ_JSON" > $REQ ;;
     
   # Unknown message type
   *)
@@ -218,13 +218,13 @@ if [ "$RC" = "0" -a "$http_code" = "200" ]; then
       # SOAP/XML Parse Result
       RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $REQ.res)
       RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $REQ.res)
-      RES_MSG=$(sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p' $REQ.res)
+      RES_MSG=$(cat $REQ.res | sed ':a;N;$!ba;s/\n/ /g' | sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p')
       sed -n -e 's/.*<RFC3161TimeStampToken>\(.*\)<\/RFC3161TimeStampToken>.*/\1/p' $REQ.res > $REQ.sig ;;
     JSON)
       # JSON Parse Result
       RES_MAJ=$(sed -n -e 's/^.*"dss.ResultMajor":"\([^"]*\)".*$/\1/p' $REQ.res)
       RES_MIN=$(sed -n -e 's/^.*"dss.ResultMinor":"\([^"]*\)".*$/\1/p' $REQ.res)
-      RES_MSG=$(sed -n -e 's/^.*"dss.ResultMessage":{\([^}]*\)}.*$/\1/p' $REQ.res)
+      RES_MSG=$(cat $REQ.res | sed 's/\\\//\//g' | sed 's/\\n/ /g' | sed -n -e 's/^.*"dss.ResultMessage":{\([^}]*\)}.*$/\1/p')
       sed -n -e 's/^.*"dss.RFC3161TimeStampToken":"\([^"]*\)".*$/\1/p' $REQ.res | sed 's/\\//g' > $REQ.sig ;;
   esac
 
