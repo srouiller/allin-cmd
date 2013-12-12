@@ -104,7 +104,8 @@ case "$MSGTYPE" in
       <soap:Body>
         <ais:sign xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
                   xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-                  xmlns:ais="http://service.ais.swisscom.com/">
+                  xmlns:ais="http://service.ais.swisscom.com/"
+                  xmlns:ns5="urn:com:swisscom:dss:1.0:schema">
           <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0">
             <InputDocuments>
               <DocumentHash>
@@ -117,7 +118,7 @@ case "$MSGTYPE" in
                 <Name>'$AP_ID'</Name>
               </ClaimedIdentity>
               <SignatureType>urn:ietf:rfc:3369</SignatureType>
-              <AddOcspResponse Type="urn:ietf:rfc:2560"/>
+              <ns5:AddOcspResponse Type="urn:ietf:rfc:2560"/>
               <AddTimestamp Type="urn:ietf:rfc:3161"/>
             </OptionalInputs>
           </SignRequest>
@@ -132,13 +133,14 @@ case "$MSGTYPE" in
     REQ_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0"
                  xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" 
-                 xmlns="urn:oasis:names:tc:dss:1.0:core:schema">
+                 xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
+                 xmlns:ns5="urn:com:swisscom:dss:1.0:schema">
         <OptionalInputs>
             <ClaimedIdentity>
                 <Name>'$AP_ID'</Name>
             </ClaimedIdentity>
             <SignatureType>urn:ietf:rfc:3369</SignatureType>
-            <AddOcspResponse Type="urn:ietf:rfc:2560"/>
+            <ns5:AddOcspResponse Type="urn:ietf:rfc:2560"/>
             <AddTimestamp Type="urn:ietf:rfc:3161"/>
         </OptionalInputs>
         <InputDocuments>
