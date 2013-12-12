@@ -223,7 +223,7 @@ if [ "$RC" = "0" -a "$http_code" = "200" ]; then
       # SOAP/XML Parse Result
       RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $REQ.res)
       RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $REQ.res)
-      RES_MSG=$(cat $REQ.res | sed ':a;N;$!ba;s/\n/ /g' | sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p')
+      RES_MSG=$(cat $REQ.res | tr '\n' ' ' | sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p')
       sed -n -e 's/.*<Base64Signature.*>\(.*\)<\/Base64Signature>.*/\1/p' $REQ.res > $REQ.sig ;;
     JSON)
       # JSON Parse Result
