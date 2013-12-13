@@ -1,0 +1,67 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://service.ais.swisscom.com/"
+	name="IDigitalSignatureService" targetNamespace="http://service.ais.swisscom.com/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://www.w3.org/XML/1998/namespace" version="1.0">
+			<xs:attribute name="lang" type="xs:string" />
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://service.ais.swisscom.com/" xmlns:ns2="urn:oasis:names:tc:dss:1.0:core:schema"
+			xmlns:ns1="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0"
+			elementFormDefault="unqualified" targetNamespace="http://service.ais.swisscom.com/"
+			version="1.0">
+			<xs:import
+				namespace="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0"
+				schemaLocation="../schema/oasis/oasis-dss-profiles-asynchronous-processing-schema-v1.0-os.xsd" />
+			<xs:import namespace="urn:oasis:names:tc:dss:1.0:core:schema"
+				schemaLocation="../schema/oasis/oasis-dss-core-schema-v1.0-os.xsd" />
+			<xs:element name="pending" type="tns:pending" />
+			<xs:element name="pendingResponse" type="tns:pendingResponse" />
+			<xs:element name="sign" type="tns:sign" />
+			<xs:element name="signResponse" type="tns:signResponse" />
+			<xs:complexType name="pending">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="ns1:PendingRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="pendingResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="ns2:Response" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="sign">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="ns2:SignRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="signResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="ns2:SignResponse" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="sign">
+		<wsdl:part element="ns1:sign" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="signResponse">
+		<wsdl:part element="ns1:signResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="pendingResponse">
+		<wsdl:part element="ns1:pendingResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="pending">
+		<wsdl:part element="ns1:pending" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="IDigitalSignatureService">
+		<wsdl:operation name="pending">
+			<wsdl:input message="ns1:pending" name="pending"></wsdl:input>
+			<wsdl:output message="ns1:pendingResponse" name="pendingResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="sign">
+			<wsdl:input message="ns1:sign" name="sign"></wsdl:input>
+			<wsdl:output message="ns1:signResponse" name="signResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>
