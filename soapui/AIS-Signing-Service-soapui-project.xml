@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="AIS Signing Service" resourceRoot="${projectDir}" soapui-version="4.0.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:description>Swissco All-In Signing Service</con:description><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="DigitalSignatureServiceServiceSoapBinding" type="wsdl" bindingName="{http://server.ais.swisscom.com/}DigitalSignatureServiceServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="../services/wsdl/service.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="..\services\wsdl\service.wsdl"><con:part><con:url>..\services\wsdl\service.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="DigitalSignatureServiceService" targetNamespace="http://server.ais.swisscom.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://server.ais.swisscom.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://service.ais.swisscom.com/">
+<con:soapui-project activeEnvironment="Default" name="AIS Signing Service" resourceRoot="${projectDir}" soapui-version="4.6.2" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:description>Swissco All-In Signing Service</con:description><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="DigitalSignatureServiceSoapBinding" type="wsdl" bindingName="{http://server.ais.swisscom.com/}DigitalSignatureServiceServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="../services/wsdl/service.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="..\services\wsdl\service.wsdl"><con:part><con:url>..\services\wsdl\service.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="DigitalSignatureServiceService" targetNamespace="http://server.ais.swisscom.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://server.ais.swisscom.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://service.ais.swisscom.com/">
   <wsdl:import location="IDigitalSignatureService.wsdl" namespace="http://service.ais.swisscom.com/"/>
   <wsdl:binding name="DigitalSignatureServiceServiceSoapBinding" type="ns1:IDigitalSignatureService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -1951,7 +1951,1715 @@
          </SignRequest>
       </ais:sign>
    </soap:Body>
-</soap:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://server.ais.swisscom.com/IDigitalSignatureService/sign"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="REGRESSION"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Timestamps" searchProperties="true"><con:settings/><con:testStep type="request" name="Timestamp 256 [synch]"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp 256 [synch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+</soap:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://server.ais.swisscom.com/IDigitalSignatureService/sign"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="AIS Signing Service" type="rest" basePath="/DSS-Server/rs" definitionUrl="..\services\wadl\service.wadl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="../services/wadl/service.wadl"><con:part><con:url>../services/wadl/service.wadl</con:url><con:content><![CDATA[<application xmlns="http://wadl.dev.java.net/2009/02" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:prefix1="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0" xmlns:prefix2="urn:oasis:names:tc:dss:1.0:core:schema">
+  <grammars>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.w3.org/XML/1998/namespace">
+      <xs:attribute name="lang" type="xs:string"/>
+    </xs:schema>
+    <include href="../schema/oasis/oasis-dss-core-schema-v1.0-os.xsd"/>
+    <include href="../schema/oasis/oasis-dss-profiles-asynchronous-processing-schema-v1.0-os.xsd"/>
+  </grammars>
+  <resources base="https://ais.pre.swissdigicert.ch/DSS-Server/rs">
+    <resource path="/v1.0">
+      <resource path="/pending">
+        <method name="POST">
+          <request>
+            <representation mediaType="application/xml" element="prefix1:PendingRequest"/>
+            <representation mediaType="application/json"/>
+          </request>
+          <response>
+            <representation mediaType="application/xml" element="prefix2:Response"/>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+      <resource path="/sign">
+        <method name="POST">
+          <request>
+            <representation mediaType="application/xml" element="prefix2:SignRequest"/>
+            <representation mediaType="application/json"/>
+          </request>
+          <response>
+            <representation mediaType="application/xml" element="prefix2:Response"/>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+    </resource>
+  </resources>
+</application>]]></con:content><con:type>http://wadl.dev.java.net/2009/02</con:type></con:part><con:part><con:url>..\services\schema\oasis\oasis-dss-core-schema-v1.0-os.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:oasis:names:tc:dss:1.0:core:schema" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:dss="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">This Schema defines the Digital Signature Service Core Protocols, Elements, and Bindings Committee Specification version 1.0 release 1</xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+  <xs:import namespace="urn:oasis:names:tc:SAML:1.0:assertion" schemaLocation="http://www.oasis-open.org/committees/download.php/3408/oasis-sstc-saml-schema-protocol-1.1.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+  <xs:complexType name="AnyType">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InternationalStringType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xml:lang" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="InputDocuments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="dss:Document"/>
+          <xs:element ref="dss:TransformedData"/>
+          <xs:element ref="dss:DocumentHash"/>
+          <xs:element name="Other" type="dss:AnyType"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DocumentBaseType" abstract="true">
+    <xs:attribute name="ID" type="xs:ID" use="optional"/>
+    <xs:attribute name="RefURI" type="xs:anyURI" use="optional"/>
+    <xs:attribute name="RefType" type="xs:anyURI" use="optional"/>
+    <xs:attribute name="SchemaRefs" type="xs:IDREFS" use="optional"/>
+  </xs:complexType>
+  <xs:element name="Document" type="dss:DocumentType"/>
+  <xs:complexType name="DocumentType">
+    <xs:complexContent>
+      <xs:extension base="dss:DocumentBaseType">
+        <xs:choice>
+          <xs:element name="InlineXML" type="dss:InlineXMLType"/>
+          <xs:element name="Base64XML" type="xs:base64Binary"/>
+          <xs:element name="EscapedXML" type="xs:string"/>
+          <xs:element ref="dss:Base64Data"/>
+          <xs:element ref="dss:AttachmentReference"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Base64Data">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:base64Binary">
+          <xs:attribute name="MimeType" type="xs:string" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="InlineXMLType">
+    <xs:sequence>
+      <xs:any processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="ignorePIs" type="xs:boolean" use="optional" default="true"/>
+    <xs:attribute name="ignoreComments" type="xs:boolean" use="optional" default="true"/>
+  </xs:complexType>
+  <xs:element name="TransformedData">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:DocumentBaseType">
+          <xs:sequence>
+            <xs:element ref="ds:Transforms" minOccurs="0"/>
+            <xs:element ref="dss:Base64Data"/>
+          </xs:sequence>
+          <xs:attribute name="WhichReference" type="xs:integer" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DocumentHash">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:DocumentBaseType">
+          <xs:sequence>
+            <xs:element ref="ds:Transforms" minOccurs="0"/>
+            <xs:element ref="ds:DigestMethod" minOccurs="0"/>
+            <xs:element ref="ds:DigestValue"/>
+          </xs:sequence>
+          <xs:attribute name="WhichReference" type="xs:integer" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignatureObject">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="ds:Signature"/>
+          <xs:element ref="dss:Timestamp"/>
+          <xs:element ref="dss:Base64Signature"/>
+          <xs:element ref="dss:SignaturePtr"/>
+          <xs:element name="Other" type="dss:AnyType"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="SchemaRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Base64Signature">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:base64Binary">
+          <xs:attribute name="Type" type="xs:anyURI"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignaturePtr">
+    <xs:complexType>
+      <xs:attribute name="WhichDocument" type="xs:IDREF"/>
+      <xs:attribute name="XPath" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Result">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ResultMajor" type="xs:anyURI"/>
+        <xs:element name="ResultMinor" type="xs:anyURI" minOccurs="0"/>
+        <xs:element name="ResultMessage" type="dss:InternationalStringType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OptionalInputs" type="dss:AnyType"/>
+  <xs:element name="OptionalOutputs" type="dss:AnyType"/>
+  <xs:element name="ServicePolicy" type="xs:anyURI"/>
+  <xs:element name="ClaimedIdentity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Name" type="saml:NameIdentifierType"/>
+        <xs:element name="SupportingInfo" type="dss:AnyType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Language" type="xs:language"/>
+  <xs:element name="AdditionalProfile" type="xs:anyURI"/>
+  <xs:element name="Schemas" type="dss:SchemasType"/>
+  <xs:complexType name="SchemasType">
+    <xs:sequence>
+      <xs:element ref="dss:Schema" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Schema" type="dss:DocumentType"/>
+  <xs:complexType name="RequestBaseType">
+    <xs:sequence>
+      <xs:element ref="dss:OptionalInputs" minOccurs="0"/>
+      <xs:element ref="dss:InputDocuments" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="RequestID" type="xs:string" use="optional"/>
+    <xs:attribute name="Profile" type="xs:anyURI" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="ResponseBaseType">
+    <xs:sequence>
+      <xs:element ref="dss:Result"/>
+      <xs:element ref="dss:OptionalOutputs" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="RequestID" type="xs:string" use="optional"/>
+    <xs:attribute name="Profile" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+  <xs:element name="Response" type="dss:ResponseBaseType"/>
+  <xs:element name="SignRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:RequestBaseType"/>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignResponse">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:ResponseBaseType">
+          <xs:sequence>
+            <xs:element ref="dss:SignatureObject" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignatureType" type="xs:anyURI"/>
+  <xs:element name="AddTimestamp" type="dss:UpdateSignatureInstructionType"/>
+  <xs:complexType name="TimeSignatureInstructionType">
+    <xs:complexContent>
+      <xs:extension base="dss:UpdateSignatureInstructionType">
+        <xs:attribute name="TimeStampTheGivenSignature" type="xs:boolean" use="optional" default="false"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UpdateSignatureInstructionType">
+    <xs:attribute name="Type" type="xs:anyURI" use="optional"/>
+  </xs:complexType>
+  <xs:element name="IntendedAudience">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Recipient" type="saml:NameIdentifierType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KeySelector">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="ds:KeyInfo"/>
+        <xs:element name="Other" type="dss:AnyType"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Properties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SignedProperties" type="dss:PropertiesType" minOccurs="0"/>
+        <xs:element name="UnsignedProperties" type="dss:PropertiesType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PropertiesType">
+    <xs:sequence>
+      <xs:element ref="dss:Property" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Property">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Identifier" type="xs:anyURI"/>
+        <xs:element name="Value" type="dss:AnyType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IncludeObject">
+    <xs:complexType>
+      <xs:attribute name="WhichDocument" type="xs:IDREF"/>
+      <xs:attribute name="hasObjectTagsAndAttributesSet" type="xs:boolean" default="false"/>
+      <xs:attribute name="ObjId" type="xs:string" use="optional"/>
+      <xs:attribute name="createReference" type="xs:boolean" use="optional" default="true"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignaturePlacement">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="XPathAfter" type="xs:string"/>
+        <xs:element name="XPathFirstChildOf" type="xs:string"/>
+      </xs:choice>
+      <xs:attribute name="WhichDocument" type="xs:IDREF"/>
+      <xs:attribute name="CreateEnvelopedSignature" type="xs:boolean" default="true"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DocumentWithSignature">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dss:Document"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignedReferences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dss:SignedReference" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignedReference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ds:Transforms" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="WhichDocument" type="xs:IDREF" use="required"/>
+      <xs:attribute name="RefURI" type="xs:anyURI" use="optional"/>
+      <xs:attribute name="RefId" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:RequestBaseType">
+          <xs:sequence>
+            <xs:element ref="dss:SignatureObject" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyResponse" type="dss:ResponseBaseType"/>
+  <xs:element name="VerifyManifestResults" type="dss:VerifyManifestResultsType"/>
+  <xs:complexType name="VerifyManifestResultsType">
+    <xs:sequence>
+      <xs:element ref="dss:ManifestResult" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ManifestResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ReferenceXpath" type="xs:string"/>
+        <xs:element name="Status" type="xs:anyURI"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UseVerificationTime"/>
+  <xs:complexType name="UseVerificationTimeType">
+    <xs:choice>
+      <xs:element name="CurrentTime"/>
+      <xs:element name="SpecificTime" type="xs:dateTime"/>
+      <xs:any namespace="##other"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="ReturnVerificationTimeInfo"/>
+  <xs:element name="AdditionalTimeInfo" type="dss:AdditionalTimeInfoType"/>
+  <xs:complexType name="AdditionalTimeInfoType">
+    <xs:simpleContent>
+      <xs:extension base="xs:dateTime">
+        <xs:attribute name="Type" type="xs:anyURI" use="required"/>
+        <xs:attribute name="Ref" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="VerificationTimeInfo" type="dss:VerificationTimeInfoType"/>
+  <xs:complexType name="VerificationTimeInfoType">
+    <xs:sequence>
+      <xs:element name="VerificationTime" type="xs:dateTime"/>
+      <xs:element ref="dss:AdditionalTimeInfo" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AdditionalKeyInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ds:KeyInfo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnProcessingDetails"/>
+  <xs:element name="ProcessingDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ValidDetail" type="dss:DetailType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="IndeterminateDetail" type="dss:DetailType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="InvalidDetail" type="dss:DetailType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DetailType">
+    <xs:sequence>
+      <xs:element name="Code" type="xs:anyURI" minOccurs="0"/>
+      <xs:element name="Message" type="dss:InternationalStringType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="Type" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+  <xs:element name="ReturnSigningTimeInfo"/>
+  <xs:element name="SigningTimeInfo" type="dss:SigningTimeInfoType"/>
+  <xs:complexType name="SigningTimeInfoType">
+    <xs:sequence>
+      <xs:element name="SigningTime" type="xs:dateTime"/>
+      <xs:element name="SigningTimeBoundaries" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LowerBoundary" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="UpperBoundary" type="xs:dateTime" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnSignerIdentity"/>
+  <xs:element name="SignerIdentity" type="saml:NameIdentifierType"/>
+  <xs:element name="ReturnUpdatedSignature">
+    <xs:complexType>
+      <xs:attribute name="Type" type="xs:anyURI" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatedSignature" type="dss:UpdatedSignatureType"/>
+  <xs:complexType name="UpdatedSignatureType">
+    <xs:sequence>
+      <xs:element ref="dss:SignatureObject"/>
+    </xs:sequence>
+    <xs:attribute name="Type" type="xs:anyURI" use="optional"/>
+  </xs:complexType>
+  <xs:element name="ReturnTransformedDocument">
+    <xs:complexType>
+      <xs:attribute name="WhichReference" type="xs:integer" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransformedDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dss:Document"/>
+      </xs:sequence>
+      <xs:attribute name="WhichReference" type="xs:integer" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnTimestampedSignature" type="dss:UpdateSignatureInstructionType"/>
+  <xs:element name="TimestampedSignature" type="dss:UpdatedSignatureType"/>
+  <xs:element name="Timestamp">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="ds:Signature"/>
+        <xs:element name="RFC3161TimeStampToken" type="xs:base64Binary"/>
+        <xs:element name="Other" type="dss:AnyType"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TstInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SerialNumber" type="xs:integer"/>
+        <xs:element name="CreationTime" type="xs:dateTime"/>
+        <xs:element name="Policy" type="xs:anyURI" minOccurs="0"/>
+        <xs:element name="ErrorBound" type="xs:duration" minOccurs="0"/>
+        <xs:element name="Ordered" type="xs:boolean" default="false" minOccurs="0"/>
+        <xs:element name="TSA" type="saml:NameIdentifierType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequesterIdentity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Name" type="saml:NameIdentifierType"/>
+        <xs:element name="SupportingInfo" type="dss:AnyType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AttachmentReference" type="dss:AttachmentReferenceType"/>
+  <xs:complexType name="AttachmentReferenceType">
+    <xs:sequence minOccurs="0">
+      <xs:element ref="ds:DigestMethod"/>
+      <xs:element ref="ds:DigestValue"/>
+    </xs:sequence>
+    <xs:attribute name="AttRefURI" type="xs:anyURI"/>
+    <xs:attribute name="MimeType" type="xs:string" use="optional"/>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd</con:url><con:content><![CDATA[<!DOCTYPE schema PUBLIC "-//W3C//DTD XMLSchema 200102//EN" "http://www.w3.org/2001/XMLSchema.dtd">
+<!--Schema for XML Signatures
+    http://www.w3.org/2000/09/xmldsig#
+    $Revision: 1.1 $ on $Date: 2002/02/08 20:32:26 $ by $Author: reagle $
+
+    Copyright 2001 The Internet Society and W3C (Massachusetts Institute
+    of Technology, Institut National de Recherche en Informatique et en
+    Automatique, Keio University). All Rights Reserved.
+    http://www.w3.org/Consortium/Legal/
+
+    This document is governed by the W3C Software License [1] as described
+    in the FAQ [2].
+
+    [1] http://www.w3.org/Consortium/Legal/copyright-software-19980720
+    [2] http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620.html#DTD-->
+<schema targetNamespace="http://www.w3.org/2000/09/xmldsig#" version="0.1" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <!--Basic Types Defined for Signatures-->
+  <simpleType name="CryptoBinary">
+    <restriction base="base64Binary"></restriction>
+  </simpleType>
+  <!--Start Signature-->
+  <element name="Signature" type="ds:SignatureType"/>
+  <complexType name="SignatureType">
+    <sequence>
+      <element ref="ds:SignedInfo"/>
+      <element ref="ds:SignatureValue"/>
+      <element ref="ds:KeyInfo" minOccurs="0"/>
+      <element ref="ds:Object" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="SignatureValue" type="ds:SignatureValueType"/>
+  <complexType name="SignatureValueType">
+    <simpleContent>
+      <extension base="base64Binary">
+        <attribute name="Id" type="ID" use="optional"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <!--Start SignedInfo-->
+  <element name="SignedInfo" type="ds:SignedInfoType"/>
+  <complexType name="SignedInfoType">
+    <sequence>
+      <element ref="ds:CanonicalizationMethod"/>
+      <element ref="ds:SignatureMethod"/>
+      <element ref="ds:Reference" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="CanonicalizationMethod" type="ds:CanonicalizationMethodType"/>
+  <complexType name="CanonicalizationMethodType" mixed="true">
+    <sequence>
+      <any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+      <!--(0,unbounded) elements from (1,1) namespace-->
+    </sequence>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <element name="SignatureMethod" type="ds:SignatureMethodType"/>
+  <complexType name="SignatureMethodType" mixed="true">
+    <sequence>
+      <element name="HMACOutputLength" minOccurs="0" type="ds:HMACOutputLengthType"/>
+      <any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+      <!--(0,unbounded) elements from (1,1) external namespace-->
+    </sequence>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <!--Start Reference-->
+  <element name="Reference" type="ds:ReferenceType"/>
+  <complexType name="ReferenceType">
+    <sequence>
+      <element ref="ds:Transforms" minOccurs="0"/>
+      <element ref="ds:DigestMethod"/>
+      <element ref="ds:DigestValue"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+    <attribute name="URI" type="anyURI" use="optional"/>
+    <attribute name="Type" type="anyURI" use="optional"/>
+  </complexType>
+  <element name="Transforms" type="ds:TransformsType"/>
+  <complexType name="TransformsType">
+    <sequence>
+      <element ref="ds:Transform" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <element name="Transform" type="ds:TransformType"/>
+  <complexType name="TransformType" mixed="true">
+    <choice minOccurs="0" maxOccurs="unbounded">
+      <any namespace="##other" processContents="lax"/>
+      <!--(1,1) elements from (0,unbounded) namespaces-->
+      <element name="XPath" type="string"/>
+    </choice>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <!--End Reference-->
+  <element name="DigestMethod" type="ds:DigestMethodType"/>
+  <complexType name="DigestMethodType" mixed="true">
+    <sequence>
+      <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <element name="DigestValue" type="ds:DigestValueType"/>
+  <simpleType name="DigestValueType">
+    <restriction base="base64Binary"/>
+  </simpleType>
+  <!--End SignedInfo-->
+  <!--Start KeyInfo-->
+  <element name="KeyInfo" type="ds:KeyInfoType"/>
+  <complexType name="KeyInfoType" mixed="true">
+    <choice maxOccurs="unbounded">
+      <element ref="ds:KeyName"/>
+      <element ref="ds:KeyValue"/>
+      <element ref="ds:RetrievalMethod"/>
+      <element ref="ds:X509Data"/>
+      <element ref="ds:PGPData"/>
+      <element ref="ds:SPKIData"/>
+      <element ref="ds:MgmtData"/>
+      <any processContents="lax" namespace="##other"/>
+      <!--(1,1) elements from (0,unbounded) namespaces-->
+    </choice>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="KeyName" type="string"/>
+  <element name="MgmtData" type="string"/>
+  <element name="KeyValue" type="ds:KeyValueType"/>
+  <complexType name="KeyValueType" mixed="true">
+    <choice>
+      <element ref="ds:DSAKeyValue"/>
+      <element ref="ds:RSAKeyValue"/>
+      <any namespace="##other" processContents="lax"/>
+    </choice>
+  </complexType>
+  <element name="RetrievalMethod" type="ds:RetrievalMethodType"/>
+  <complexType name="RetrievalMethodType">
+    <sequence>
+      <element ref="ds:Transforms" minOccurs="0"/>
+    </sequence>
+    <attribute name="URI" type="anyURI"/>
+    <attribute name="Type" type="anyURI" use="optional"/>
+  </complexType>
+  <!--Start X509Data-->
+  <element name="X509Data" type="ds:X509DataType"/>
+  <complexType name="X509DataType">
+    <sequence maxOccurs="unbounded">
+      <choice>
+        <element name="X509IssuerSerial" type="ds:X509IssuerSerialType"/>
+        <element name="X509SKI" type="base64Binary"/>
+        <element name="X509SubjectName" type="string"/>
+        <element name="X509Certificate" type="base64Binary"/>
+        <element name="X509CRL" type="base64Binary"/>
+        <any namespace="##other" processContents="lax"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="X509IssuerSerialType">
+    <sequence>
+      <element name="X509IssuerName" type="string"/>
+      <element name="X509SerialNumber" type="integer"/>
+    </sequence>
+  </complexType>
+  <!--End X509Data-->
+  <!--Begin PGPData-->
+  <element name="PGPData" type="ds:PGPDataType"/>
+  <complexType name="PGPDataType">
+    <choice>
+      <sequence>
+        <element name="PGPKeyID" type="base64Binary"/>
+        <element name="PGPKeyPacket" type="base64Binary" minOccurs="0"/>
+        <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+      <sequence>
+        <element name="PGPKeyPacket" type="base64Binary"/>
+        <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+    </choice>
+  </complexType>
+  <!--End PGPData-->
+  <!--Begin SPKIData-->
+  <element name="SPKIData" type="ds:SPKIDataType"/>
+  <complexType name="SPKIDataType">
+    <sequence maxOccurs="unbounded">
+      <element name="SPKISexp" type="base64Binary"/>
+      <any namespace="##other" processContents="lax" minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <!--End SPKIData-->
+  <!--End KeyInfo-->
+  <!--Start Object (Manifest, SignatureProperty)-->
+  <element name="Object" type="ds:ObjectType"/>
+  <complexType name="ObjectType" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <any namespace="##any" processContents="lax"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+    <attribute name="MimeType" type="string" use="optional"/>
+    <!--add a grep facet-->
+    <attribute name="Encoding" type="anyURI" use="optional"/>
+  </complexType>
+  <element name="Manifest" type="ds:ManifestType"/>
+  <complexType name="ManifestType">
+    <sequence>
+      <element ref="ds:Reference" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="SignatureProperties" type="ds:SignaturePropertiesType"/>
+  <complexType name="SignaturePropertiesType">
+    <sequence>
+      <element ref="ds:SignatureProperty" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="SignatureProperty" type="ds:SignaturePropertyType"/>
+  <complexType name="SignaturePropertyType" mixed="true">
+    <choice maxOccurs="unbounded">
+      <any namespace="##other" processContents="lax"/>
+      <!--(1,1) elements from (1,unbounded) namespaces-->
+    </choice>
+    <attribute name="Target" type="anyURI" use="required"/>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <!--End Object (Manifest, SignatureProperty)-->
+  <!--Start Algorithm Parameters-->
+  <simpleType name="HMACOutputLengthType">
+    <restriction base="integer"/>
+  </simpleType>
+  <!--Start KeyValue Element-types-->
+  <element name="DSAKeyValue" type="ds:DSAKeyValueType"/>
+  <complexType name="DSAKeyValueType">
+    <sequence>
+      <sequence minOccurs="0">
+        <element name="P" type="ds:CryptoBinary"/>
+        <element name="Q" type="ds:CryptoBinary"/>
+      </sequence>
+      <element name="G" type="ds:CryptoBinary" minOccurs="0"/>
+      <element name="Y" type="ds:CryptoBinary"/>
+      <element name="J" type="ds:CryptoBinary" minOccurs="0"/>
+      <sequence minOccurs="0">
+        <element name="Seed" type="ds:CryptoBinary"/>
+        <element name="PgenCounter" type="ds:CryptoBinary"/>
+      </sequence>
+    </sequence>
+  </complexType>
+  <element name="RSAKeyValue" type="ds:RSAKeyValueType"/>
+  <complexType name="RSAKeyValueType">
+    <sequence>
+      <element name="Modulus" type="ds:CryptoBinary"/>
+      <element name="Exponent" type="ds:CryptoBinary"/>
+    </sequence>
+  </complexType>
+  <!--End KeyValue Element-types-->
+  <!--End Signature-->
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://www.oasis-open.org/committees/download.php/3408/oasis-sstc-saml-schema-protocol-1.1.xsd</con:url><con:content><![CDATA[<schema targetNamespace="urn:oasis:names:tc:SAML:1.0:assertion" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+  <annotation>
+    <documentation>Document identifier: oasis-sstc-saml-schema-assertion-1.1
+                Location: http://www.oasis-open.org/committees/documents.php?wg_abbrev=security
+                Revision history:
+                V1.0 (November, 2002):
+                  Initial standard schema.
+                V1.1 (September, 2003):
+                  * Note that V1.1 of this schema has the same XML namespace as V1.0.
+                  Rebased ID content directly on XML Schema types
+                  Added DoNotCacheCondition element and DoNotCacheConditionType</documentation>
+  </annotation>
+  <simpleType name="DecisionType">
+    <restriction base="string">
+      <enumeration value="Permit"/>
+      <enumeration value="Deny"/>
+      <enumeration value="Indeterminate"/>
+    </restriction>
+  </simpleType>
+  <element name="AssertionIDReference" type="NCName"/>
+  <element name="Assertion" type="saml:AssertionType"/>
+  <complexType name="AssertionType">
+    <sequence>
+      <element ref="saml:Conditions" minOccurs="0"/>
+      <element ref="saml:Advice" minOccurs="0"/>
+      <choice maxOccurs="unbounded">
+        <element ref="saml:Statement"/>
+        <element ref="saml:SubjectStatement"/>
+        <element ref="saml:AuthenticationStatement"/>
+        <element ref="saml:AuthorizationDecisionStatement"/>
+        <element ref="saml:AttributeStatement"/>
+      </choice>
+      <element ref="ds:Signature" minOccurs="0"/>
+    </sequence>
+    <attribute name="MajorVersion" type="integer" use="required"/>
+    <attribute name="MinorVersion" type="integer" use="required"/>
+    <attribute name="AssertionID" type="ID" use="required"/>
+    <attribute name="Issuer" type="string" use="required"/>
+    <attribute name="IssueInstant" type="dateTime" use="required"/>
+  </complexType>
+  <element name="Conditions" type="saml:ConditionsType"/>
+  <complexType name="ConditionsType">
+    <choice minOccurs="0" maxOccurs="unbounded">
+      <element ref="saml:AudienceRestrictionCondition"/>
+      <element ref="saml:DoNotCacheCondition"/>
+      <element ref="saml:Condition"/>
+    </choice>
+    <attribute name="NotBefore" type="dateTime" use="optional"/>
+    <attribute name="NotOnOrAfter" type="dateTime" use="optional"/>
+  </complexType>
+  <element name="Condition" type="saml:ConditionAbstractType"/>
+  <complexType name="ConditionAbstractType" abstract="true"/>
+  <element name="AudienceRestrictionCondition" type="saml:AudienceRestrictionConditionType"/>
+  <complexType name="AudienceRestrictionConditionType">
+    <complexContent>
+      <extension base="saml:ConditionAbstractType">
+        <sequence>
+          <element ref="saml:Audience" maxOccurs="unbounded"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="Audience" type="anyURI"/>
+  <element name="DoNotCacheCondition" type="saml:DoNotCacheConditionType"/>
+  <complexType name="DoNotCacheConditionType">
+    <complexContent>
+      <extension base="saml:ConditionAbstractType"/>
+    </complexContent>
+  </complexType>
+  <element name="Advice" type="saml:AdviceType"/>
+  <complexType name="AdviceType">
+    <choice minOccurs="0" maxOccurs="unbounded">
+      <element ref="saml:AssertionIDReference"/>
+      <element ref="saml:Assertion"/>
+      <any namespace="##other" processContents="lax"/>
+    </choice>
+  </complexType>
+  <element name="Statement" type="saml:StatementAbstractType"/>
+  <complexType name="StatementAbstractType" abstract="true"/>
+  <element name="SubjectStatement" type="saml:SubjectStatementAbstractType"/>
+  <complexType name="SubjectStatementAbstractType" abstract="true">
+    <complexContent>
+      <extension base="saml:StatementAbstractType">
+        <sequence>
+          <element ref="saml:Subject"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="Subject" type="saml:SubjectType"/>
+  <complexType name="SubjectType">
+    <choice>
+      <sequence>
+        <element ref="saml:NameIdentifier"/>
+        <element ref="saml:SubjectConfirmation" minOccurs="0"/>
+      </sequence>
+      <element ref="saml:SubjectConfirmation"/>
+    </choice>
+  </complexType>
+  <element name="NameIdentifier" type="saml:NameIdentifierType"/>
+  <complexType name="NameIdentifierType">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="NameQualifier" type="string" use="optional"/>
+        <attribute name="Format" type="anyURI" use="optional"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <element name="SubjectConfirmation" type="saml:SubjectConfirmationType"/>
+  <complexType name="SubjectConfirmationType">
+    <sequence>
+      <element ref="saml:ConfirmationMethod" maxOccurs="unbounded"/>
+      <element ref="saml:SubjectConfirmationData" minOccurs="0"/>
+      <element ref="ds:KeyInfo" minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <element name="SubjectConfirmationData" type="anyType"/>
+  <element name="ConfirmationMethod" type="anyURI"/>
+  <element name="AuthenticationStatement" type="saml:AuthenticationStatementType"/>
+  <complexType name="AuthenticationStatementType">
+    <complexContent>
+      <extension base="saml:SubjectStatementAbstractType">
+        <sequence>
+          <element ref="saml:SubjectLocality" minOccurs="0"/>
+          <element ref="saml:AuthorityBinding" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="AuthenticationMethod" type="anyURI" use="required"/>
+        <attribute name="AuthenticationInstant" type="dateTime" use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="SubjectLocality" type="saml:SubjectLocalityType"/>
+  <complexType name="SubjectLocalityType">
+    <attribute name="IPAddress" type="string" use="optional"/>
+    <attribute name="DNSAddress" type="string" use="optional"/>
+  </complexType>
+  <element name="AuthorityBinding" type="saml:AuthorityBindingType"/>
+  <complexType name="AuthorityBindingType">
+    <attribute name="AuthorityKind" type="QName" use="required"/>
+    <attribute name="Location" type="anyURI" use="required"/>
+    <attribute name="Binding" type="anyURI" use="required"/>
+  </complexType>
+  <element name="AuthorizationDecisionStatement" type="saml:AuthorizationDecisionStatementType"/>
+  <complexType name="AuthorizationDecisionStatementType">
+    <complexContent>
+      <extension base="saml:SubjectStatementAbstractType">
+        <sequence>
+          <element ref="saml:Action" maxOccurs="unbounded"/>
+          <element ref="saml:Evidence" minOccurs="0"/>
+        </sequence>
+        <attribute name="Resource" type="anyURI" use="required"/>
+        <attribute name="Decision" type="saml:DecisionType" use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="Action" type="saml:ActionType"/>
+  <complexType name="ActionType">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="Namespace" type="anyURI"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <element name="Evidence" type="saml:EvidenceType"/>
+  <complexType name="EvidenceType">
+    <choice maxOccurs="unbounded">
+      <element ref="saml:AssertionIDReference"/>
+      <element ref="saml:Assertion"/>
+    </choice>
+  </complexType>
+  <element name="AttributeStatement" type="saml:AttributeStatementType"/>
+  <complexType name="AttributeStatementType">
+    <complexContent>
+      <extension base="saml:SubjectStatementAbstractType">
+        <sequence>
+          <element ref="saml:Attribute" maxOccurs="unbounded"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="AttributeDesignator" type="saml:AttributeDesignatorType"/>
+  <complexType name="AttributeDesignatorType">
+    <attribute name="AttributeName" type="string" use="required"/>
+    <attribute name="AttributeNamespace" type="anyURI" use="required"/>
+  </complexType>
+  <element name="Attribute" type="saml:AttributeType"/>
+  <complexType name="AttributeType">
+    <complexContent>
+      <extension base="saml:AttributeDesignatorType">
+        <sequence>
+          <element ref="saml:AttributeValue" maxOccurs="unbounded"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="AttributeValue" type="anyType"/>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://www.w3.org/2001/xml.xsd</con:url><con:content><![CDATA[<?xml-stylesheet href="../2008/09/xsd.xsl" type="text/xsl"?>
+<xs:schema targetNamespace="http://www.w3.org/XML/1998/namespace" xml:lang="en" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/1999/xhtml">
+  <xs:annotation>
+    <xs:documentation>
+      <div>
+        <h1>About the XML namespace</h1>
+        <div class="bodytext">
+          <p>This schema document describes the XML namespace, in a form
+      suitable for import by other schema documents.</p>
+          <p>
+            See
+            <a href="http://www.w3.org/XML/1998/namespace.html">http://www.w3.org/XML/1998/namespace.html</a>
+            and
+            <a href="http://www.w3.org/TR/REC-xml">http://www.w3.org/TR/REC-xml</a>
+            for information 
+      about this namespace.
+          </p>
+          <p>Note that local names in this namespace are intended to be
+      defined only by the World Wide Web Consortium or its subgroups.
+      The names currently defined in this namespace are listed below.
+      They should not be used with conflicting semantics by any Working
+      Group, specification, or document instance.</p>
+          <p>
+            See further below in this document for more information about
+            <a href="#usage">how to refer to this schema document from your own
+      XSD schema documents</a>
+            and about
+            <a href="#nsversioning">the
+      namespace-versioning policy governing this schema document</a>
+            .
+          </p>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:attribute name="lang">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>lang (as an attribute name)</h3>
+          <p>denotes an attribute whose value
+       is a language code for the natural language of the content of
+       any element; its value is inherited.  This name is reserved
+       by virtue of its definition in the XML specification.</p>
+        </div>
+        <div>
+          <h4>Notes</h4>
+          <p>Attempting to install the relevant ISO 2- and 3-letter
+      codes as the enumerated possible values is probably never
+      going to be a realistic possibility.</p>
+          <p>
+            See BCP 47 at
+            <a href="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">http://www.rfc-editor.org/rfc/bcp/bcp47.txt</a>
+            and the IANA language subtag registry at
+            <a href="http://www.iana.org/assignments/language-subtag-registry">http://www.iana.org/assignments/language-subtag-registry</a>
+            for further information.
+          </p>
+          <p>The union allows for the 'un-declaration' of xml:lang with
+      the empty string.</p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:union memberTypes="xs:language">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="space">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>space (as an attribute name)</h3>
+          <p>denotes an attribute whose
+       value is a keyword indicating what whitespace processing
+       discipline is intended for the content of the element; its
+       value is inherited.  This name is reserved by virtue of its
+       definition in the XML specification.</p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:NCName">
+        <xs:enumeration value="default"/>
+        <xs:enumeration value="preserve"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="base" type="xs:anyURI">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>base (as an attribute name)</h3>
+          <p>denotes an attribute whose value
+       provides a URI to be used as the base for interpreting any
+       relative URIs in the scope of the element on which it
+       appears; its value is inherited.  This name is reserved
+       by virtue of its definition in the XML Base specification.</p>
+          <p>
+            See
+            <a href="http://www.w3.org/TR/xmlbase/">http://www.w3.org/TR/xmlbase/</a>
+            for information about this attribute.
+          </p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:attribute name="id" type="xs:ID">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>id (as an attribute name)</h3>
+          <p>denotes an attribute whose value
+       should be interpreted as if declared to be of type ID.
+       This name is reserved by virtue of its definition in the
+       xml:id specification.</p>
+          <p>
+            See
+            <a href="http://www.w3.org/TR/xml-id/">http://www.w3.org/TR/xml-id/</a>
+            for information about this attribute.
+          </p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:attributeGroup name="specialAttrs">
+    <xs:attribute ref="xml:base"/>
+    <xs:attribute ref="xml:lang"/>
+    <xs:attribute ref="xml:space"/>
+    <xs:attribute ref="xml:id"/>
+  </xs:attributeGroup>
+  <xs:annotation>
+    <xs:documentation>
+      <div>
+        <h3>Father (in any context at all)</h3>
+        <div class="bodytext">
+          <p>denotes Jon Bosak, the chair of 
+      the original XML Working Group.  This name is reserved by 
+      the following decision of the W3C XML Plenary and 
+      XML Coordination groups:</p>
+          <blockquote>
+            <p>In appreciation for his vision, leadership and
+	dedication the W3C XML Plenary on this 10th day of
+	February, 2000, reserves for Jon Bosak in perpetuity
+	the XML name "xml:Father".</p>
+          </blockquote>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:documentation>
+      <div xml:id="usage" id="usage">
+        <h2>
+          <a name="usage">About this schema document</a>
+        </h2>
+        <div class="bodytext">
+          <p>
+            This schema defines attributes and an attribute group suitable
+      for use by schemas wishing to allow
+            <code>xml:base</code>
+            ,
+            <code>xml:lang</code>
+            ,
+            <code>xml:space</code>
+            or
+            <code>xml:id</code>
+            attributes on elements they define.
+          </p>
+          <p>To enable this, such a schema must import this schema for
+      the XML namespace, e.g. as follows:</p>
+          <pre>&lt;schema . . .>
+           . . .
+           &lt;import namespace="http://www.w3.org/XML/1998/namespace"
+                      schemaLocation="http://www.w3.org/2001/xml.xsd"/></pre>
+          <p>or</p>
+          <pre>&lt;import namespace="http://www.w3.org/XML/1998/namespace"
+                      schemaLocation="http://www.w3.org/2009/01/xml.xsd"/></pre>
+          <p>Subsequently, qualified reference to any of the attributes or the
+      group defined below will have the desired effect, e.g.</p>
+          <pre>&lt;type . . .>
+           . . .
+           &lt;attributeGroup ref="xml:specialAttrs"/></pre>
+          <p>will define a type which will schema-validate an instance element
+      with any of those attributes.</p>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:documentation>
+      <div id="nsversioning" xml:id="nsversioning">
+        <h2>
+          <a name="nsversioning">Versioning policy for this schema document</a>
+        </h2>
+        <div class="bodytext">
+          <p>
+            In keeping with the XML Schema WG's standard versioning
+      policy, this schema document will persist at
+            <a href="http://www.w3.org/2009/01/xml.xsd">http://www.w3.org/2009/01/xml.xsd</a>
+            .
+          </p>
+          <p>
+            At the date of issue it can also be found at
+            <a href="http://www.w3.org/2001/xml.xsd">http://www.w3.org/2001/xml.xsd</a>
+            .
+          </p>
+          <p>
+            The schema document at that URI may however change in the future,
+      in order to remain compatible with the latest version of XML
+      Schema itself, or with the XML namespace itself.  In other words,
+      if the XML Schema or XML namespaces change, the version of this
+      document at
+            <a href="http://www.w3.org/2001/xml.xsd">http://www.w3.org/2001/xml.xsd</a>
+            will change accordingly; the version at
+            <a href="http://www.w3.org/2009/01/xml.xsd">http://www.w3.org/2009/01/xml.xsd</a>
+            will not change.
+          </p>
+          <p>Previous dated (and unchanging) versions of this schema 
+      document are at:</p>
+          <ul>
+            <li>
+              <a href="http://www.w3.org/2009/01/xml.xsd">http://www.w3.org/2009/01/xml.xsd</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/2007/08/xml.xsd">http://www.w3.org/2007/08/xml.xsd</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/2004/10/xml.xsd">http://www.w3.org/2004/10/xml.xsd</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/2001/03/xml.xsd">http://www.w3.org/2001/03/xml.xsd</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>..\services\schema\oasis\oasis-dss-profiles-asynchronous-processing-schema-v1.0-os.xsd</con:url><con:content><![CDATA[<!---->
+<!--Schema defining the additional elements used for asynchronous processing.-->
+<!--This schema extends the OASIS DSS core schema.-->
+<!---->
+<!--version : cd-r2, 12. Aug. 2006-->
+<!--author  : andreas kuehne, kuehne@klup.de-->
+<!---->
+<xs:schema targetNamespace="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:async="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dss="urn:oasis:names:tc:dss:1.0:core:schema">
+  <xs:import namespace="urn:oasis:names:tc:dss:1.0:core:schema" schemaLocation="http://docs.oasis-open.org/dss/v1.0/oasis-dss-core-schema-v1.0-os.xsd"/>
+  <!--Additional requests required for asynch protocol-->
+  <xs:element name="PendingRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:RequestBaseType"/>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="ResponseID">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://docs.oasis-open.org/dss/v1.0/oasis-dss-core-schema-v1.0-os.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:oasis:names:tc:dss:1.0:core:schema" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:dss="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">This Schema defines the Digital Signature Service Core Protocols, Elements, and Bindings Committee Specification version 1.0 release 1</xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+  <xs:import namespace="urn:oasis:names:tc:SAML:1.0:assertion" schemaLocation="http://www.oasis-open.org/committees/download.php/3408/oasis-sstc-saml-schema-protocol-1.1.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+  <xs:complexType name="AnyType">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InternationalStringType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xml:lang" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="InputDocuments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="dss:Document"/>
+          <xs:element ref="dss:TransformedData"/>
+          <xs:element ref="dss:DocumentHash"/>
+          <xs:element name="Other" type="dss:AnyType"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DocumentBaseType" abstract="true">
+    <xs:attribute name="ID" type="xs:ID" use="optional"/>
+    <xs:attribute name="RefURI" type="xs:anyURI" use="optional"/>
+    <xs:attribute name="RefType" type="xs:anyURI" use="optional"/>
+    <xs:attribute name="SchemaRefs" type="xs:IDREFS" use="optional"/>
+  </xs:complexType>
+  <xs:element name="Document" type="dss:DocumentType"/>
+  <xs:complexType name="DocumentType">
+    <xs:complexContent>
+      <xs:extension base="dss:DocumentBaseType">
+        <xs:choice>
+          <xs:element name="InlineXML" type="dss:InlineXMLType"/>
+          <xs:element name="Base64XML" type="xs:base64Binary"/>
+          <xs:element name="EscapedXML" type="xs:string"/>
+          <xs:element ref="dss:Base64Data"/>
+          <xs:element ref="dss:AttachmentReference"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Base64Data">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:base64Binary">
+          <xs:attribute name="MimeType" type="xs:string" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="InlineXMLType">
+    <xs:sequence>
+      <xs:any processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="ignorePIs" type="xs:boolean" use="optional" default="true"/>
+    <xs:attribute name="ignoreComments" type="xs:boolean" use="optional" default="true"/>
+  </xs:complexType>
+  <xs:element name="TransformedData">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:DocumentBaseType">
+          <xs:sequence>
+            <xs:element ref="ds:Transforms" minOccurs="0"/>
+            <xs:element ref="dss:Base64Data"/>
+          </xs:sequence>
+          <xs:attribute name="WhichReference" type="xs:integer" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DocumentHash">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:DocumentBaseType">
+          <xs:sequence>
+            <xs:element ref="ds:Transforms" minOccurs="0"/>
+            <xs:element ref="ds:DigestMethod" minOccurs="0"/>
+            <xs:element ref="ds:DigestValue"/>
+          </xs:sequence>
+          <xs:attribute name="WhichReference" type="xs:integer" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignatureObject">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="ds:Signature"/>
+          <xs:element ref="dss:Timestamp"/>
+          <xs:element ref="dss:Base64Signature"/>
+          <xs:element ref="dss:SignaturePtr"/>
+          <xs:element name="Other" type="dss:AnyType"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="SchemaRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Base64Signature">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:base64Binary">
+          <xs:attribute name="Type" type="xs:anyURI"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignaturePtr">
+    <xs:complexType>
+      <xs:attribute name="WhichDocument" type="xs:IDREF"/>
+      <xs:attribute name="XPath" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Result">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ResultMajor" type="xs:anyURI"/>
+        <xs:element name="ResultMinor" type="xs:anyURI" minOccurs="0"/>
+        <xs:element name="ResultMessage" type="dss:InternationalStringType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OptionalInputs" type="dss:AnyType"/>
+  <xs:element name="OptionalOutputs" type="dss:AnyType"/>
+  <xs:element name="ServicePolicy" type="xs:anyURI"/>
+  <xs:element name="ClaimedIdentity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Name" type="saml:NameIdentifierType"/>
+        <xs:element name="SupportingInfo" type="dss:AnyType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Language" type="xs:language"/>
+  <xs:element name="AdditionalProfile" type="xs:anyURI"/>
+  <xs:element name="Schemas" type="dss:SchemasType"/>
+  <xs:complexType name="SchemasType">
+    <xs:sequence>
+      <xs:element ref="dss:Schema" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Schema" type="dss:DocumentType"/>
+  <xs:complexType name="RequestBaseType">
+    <xs:sequence>
+      <xs:element ref="dss:OptionalInputs" minOccurs="0"/>
+      <xs:element ref="dss:InputDocuments" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="RequestID" type="xs:string" use="optional"/>
+    <xs:attribute name="Profile" type="xs:anyURI" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="ResponseBaseType">
+    <xs:sequence>
+      <xs:element ref="dss:Result"/>
+      <xs:element ref="dss:OptionalOutputs" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="RequestID" type="xs:string" use="optional"/>
+    <xs:attribute name="Profile" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+  <xs:element name="Response" type="dss:ResponseBaseType"/>
+  <xs:element name="SignRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:RequestBaseType"/>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignResponse">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:ResponseBaseType">
+          <xs:sequence>
+            <xs:element ref="dss:SignatureObject" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignatureType" type="xs:anyURI"/>
+  <xs:element name="AddTimestamp" type="dss:UpdateSignatureInstructionType"/>
+  <xs:complexType name="TimeSignatureInstructionType">
+    <xs:complexContent>
+      <xs:extension base="dss:UpdateSignatureInstructionType">
+        <xs:attribute name="TimeStampTheGivenSignature" type="xs:boolean" use="optional" default="false"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UpdateSignatureInstructionType">
+    <xs:attribute name="Type" type="xs:anyURI" use="optional"/>
+  </xs:complexType>
+  <xs:element name="IntendedAudience">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Recipient" type="saml:NameIdentifierType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KeySelector">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="ds:KeyInfo"/>
+        <xs:element name="Other" type="dss:AnyType"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Properties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SignedProperties" type="dss:PropertiesType" minOccurs="0"/>
+        <xs:element name="UnsignedProperties" type="dss:PropertiesType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PropertiesType">
+    <xs:sequence>
+      <xs:element ref="dss:Property" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Property">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Identifier" type="xs:anyURI"/>
+        <xs:element name="Value" type="dss:AnyType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IncludeObject">
+    <xs:complexType>
+      <xs:attribute name="WhichDocument" type="xs:IDREF"/>
+      <xs:attribute name="hasObjectTagsAndAttributesSet" type="xs:boolean" default="false"/>
+      <xs:attribute name="ObjId" type="xs:string" use="optional"/>
+      <xs:attribute name="createReference" type="xs:boolean" use="optional" default="true"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignaturePlacement">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="XPathAfter" type="xs:string"/>
+        <xs:element name="XPathFirstChildOf" type="xs:string"/>
+      </xs:choice>
+      <xs:attribute name="WhichDocument" type="xs:IDREF"/>
+      <xs:attribute name="CreateEnvelopedSignature" type="xs:boolean" default="true"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DocumentWithSignature">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dss:Document"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignedReferences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dss:SignedReference" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignedReference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ds:Transforms" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="WhichDocument" type="xs:IDREF" use="required"/>
+      <xs:attribute name="RefURI" type="xs:anyURI" use="optional"/>
+      <xs:attribute name="RefId" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dss:RequestBaseType">
+          <xs:sequence>
+            <xs:element ref="dss:SignatureObject" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyResponse" type="dss:ResponseBaseType"/>
+  <xs:element name="VerifyManifestResults" type="dss:VerifyManifestResultsType"/>
+  <xs:complexType name="VerifyManifestResultsType">
+    <xs:sequence>
+      <xs:element ref="dss:ManifestResult" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ManifestResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ReferenceXpath" type="xs:string"/>
+        <xs:element name="Status" type="xs:anyURI"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UseVerificationTime"/>
+  <xs:complexType name="UseVerificationTimeType">
+    <xs:choice>
+      <xs:element name="CurrentTime"/>
+      <xs:element name="SpecificTime" type="xs:dateTime"/>
+      <xs:any namespace="##other"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="ReturnVerificationTimeInfo"/>
+  <xs:element name="AdditionalTimeInfo" type="dss:AdditionalTimeInfoType"/>
+  <xs:complexType name="AdditionalTimeInfoType">
+    <xs:simpleContent>
+      <xs:extension base="xs:dateTime">
+        <xs:attribute name="Type" type="xs:anyURI" use="required"/>
+        <xs:attribute name="Ref" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="VerificationTimeInfo" type="dss:VerificationTimeInfoType"/>
+  <xs:complexType name="VerificationTimeInfoType">
+    <xs:sequence>
+      <xs:element name="VerificationTime" type="xs:dateTime"/>
+      <xs:element ref="dss:AdditionalTimeInfo" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AdditionalKeyInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ds:KeyInfo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnProcessingDetails"/>
+  <xs:element name="ProcessingDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ValidDetail" type="dss:DetailType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="IndeterminateDetail" type="dss:DetailType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="InvalidDetail" type="dss:DetailType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DetailType">
+    <xs:sequence>
+      <xs:element name="Code" type="xs:anyURI" minOccurs="0"/>
+      <xs:element name="Message" type="dss:InternationalStringType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="Type" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+  <xs:element name="ReturnSigningTimeInfo"/>
+  <xs:element name="SigningTimeInfo" type="dss:SigningTimeInfoType"/>
+  <xs:complexType name="SigningTimeInfoType">
+    <xs:sequence>
+      <xs:element name="SigningTime" type="xs:dateTime"/>
+      <xs:element name="SigningTimeBoundaries" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LowerBoundary" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="UpperBoundary" type="xs:dateTime" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnSignerIdentity"/>
+  <xs:element name="SignerIdentity" type="saml:NameIdentifierType"/>
+  <xs:element name="ReturnUpdatedSignature">
+    <xs:complexType>
+      <xs:attribute name="Type" type="xs:anyURI" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatedSignature" type="dss:UpdatedSignatureType"/>
+  <xs:complexType name="UpdatedSignatureType">
+    <xs:sequence>
+      <xs:element ref="dss:SignatureObject"/>
+    </xs:sequence>
+    <xs:attribute name="Type" type="xs:anyURI" use="optional"/>
+  </xs:complexType>
+  <xs:element name="ReturnTransformedDocument">
+    <xs:complexType>
+      <xs:attribute name="WhichReference" type="xs:integer" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransformedDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dss:Document"/>
+      </xs:sequence>
+      <xs:attribute name="WhichReference" type="xs:integer" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnTimestampedSignature" type="dss:UpdateSignatureInstructionType"/>
+  <xs:element name="TimestampedSignature" type="dss:UpdatedSignatureType"/>
+  <xs:element name="Timestamp">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="ds:Signature"/>
+        <xs:element name="RFC3161TimeStampToken" type="xs:base64Binary"/>
+        <xs:element name="Other" type="dss:AnyType"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TstInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SerialNumber" type="xs:integer"/>
+        <xs:element name="CreationTime" type="xs:dateTime"/>
+        <xs:element name="Policy" type="xs:anyURI" minOccurs="0"/>
+        <xs:element name="ErrorBound" type="xs:duration" minOccurs="0"/>
+        <xs:element name="Ordered" type="xs:boolean" default="false" minOccurs="0"/>
+        <xs:element name="TSA" type="saml:NameIdentifierType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequesterIdentity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Name" type="saml:NameIdentifierType"/>
+        <xs:element name="SupportingInfo" type="dss:AnyType" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AttachmentReference" type="dss:AttachmentReferenceType"/>
+  <xs:complexType name="AttachmentReferenceType">
+    <xs:sequence minOccurs="0">
+      <xs:element ref="ds:DigestMethod"/>
+      <xs:element ref="ds:DigestValue"/>
+    </xs:sequence>
+    <xs:attribute name="AttRefURI" type="xs:anyURI"/>
+    <xs:attribute name="MimeType" type="xs:string" use="optional"/>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint></con:endpoints><con:resource name="/v1.0" path="/v1.0"><con:settings/><con:parameters/><con:resource name="/pending" path="/pending"><con:settings/><con:parameters><con:parameter><con:name>Accept</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="POST" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0">urn:PendingRequest</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:core:schema">urn:Response</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="XML Pending" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint><con:request><![CDATA[<ns3:PendingRequest Profile="urn:com:swisscom:dss:v1.0" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ns4="urn:com:swisscom:dss:1.0:schema" xmlns:ns3="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0">
+    <OptionalInputs>
+        <ClaimedIdentity>
+            <Name>cartel.ch</Name>
+        </ClaimedIdentity>
+        <ns3:ResponseID>cc23b1c6-a266-4a43-8269-a813f0c18bce</ns3:ResponseID>
+    </OptionalInputs>
+</ns3:PendingRequest>
+
+]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Accept" value="application/xml" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>Accept</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="/sign" path="/sign"><con:settings/><con:parameters><con:parameter><con:name>Accept</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="POST" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:core:schema">urn:SignRequest</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:core:schema">urn:Response</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="XML Timestamp [synch]" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint><con:request><![CDATA[<SignRequest xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" RequestID="${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}" Profile="urn:com:swisscom:dss:v1.0">
+<OptionalInputs>
+    <ClaimedIdentity>
+        <Name>cartel.ch</Name>
+    </ClaimedIdentity>
+    <SignatureType>urn:ietf:rfc:3161</SignatureType>
+    <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
+</OptionalInputs>
+<InputDocuments>
+    <DocumentHash>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <dsig:DigestValue>GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA=</dsig:DigestValue>
+    </DocumentHash>
+</InputDocuments>
+</SignRequest>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Accept" value="application/xml" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry/></con:parameterOrder></con:request><con:request name="XML Timestamp [asynch]" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint><con:request><![CDATA[<SignRequest xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" RequestID="${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}" Profile="urn:com:swisscom:dss:v1.0">
+<OptionalInputs>
+    <ClaimedIdentity>
+        <Name>cartel.ch</Name>
+    </ClaimedIdentity>
+    <SignatureType>urn:ietf:rfc:3161</SignatureType>
+    <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
+    <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing</AdditionalProfile>
+</OptionalInputs>
+<InputDocuments>
+    <DocumentHash>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <dsig:DigestValue>GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA=</dsig:DigestValue>
+    </DocumentHash>
+</InputDocuments>
+</SignRequest>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Accept" value="application/xml" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry/></con:parameterOrder></con:request></con:method></con:resource></con:resource></con:interface><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="AIS Signing Service" type="rest" basePath="/DSS-Server/rs" definitionUrl="..\services\wadl\service.wadl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT"/><con:endpoints><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint></con:endpoints><con:resource name="/v1.0" path="/v1.0"><con:settings/><con:parameters/><con:resource name="/pending" path="/pending"><con:settings/><con:parameters><con:parameter><con:name>Accept</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="POST" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0">urn:PendingRequest</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:core:schema">urn:Response</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="JSON Pending" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint><con:request>{
+  "async.PendingRequest": {
+    "@Profile": "urn:com:swisscom:dss:v1.0",
+    "dss.OptionalInputs": {
+      "dss.ClaimedIdentity": {
+        "dss.Name": "cartel.ch"
+      },
+      "async.ResponseID": "969be0c4-a071-4e51-bde3-50cd4f443aa4"
+    }
+  }
+}</con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Accept" value="application/json" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>Accept</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="/sign" path="/sign"><con:settings/><con:parameters><con:parameter><con:name>Accept</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="POST" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:core:schema">urn:SignRequest</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:dss:1.0:core:schema">urn:Response</con:element><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="JSON Timestamp [synch]" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint><con:request>{
+  "dss.SignRequest": {
+    "@RequestID": "${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}",
+    "@Profile": "urn:com:swisscom:dss:v1.0",
+    "dss.OptionalInputs": {
+      "dss.ClaimedIdentity": {
+        "dss.Name": "cartel.ch"
+      },
+      "dss.SignatureType": "urn:ietf:rfc:3161",
+      "dss.AdditionalProfile": "urn:oasis:names:tc:dss:1.0:profiles:timestamping"
+    },
+    "dss.InputDocuments": {
+      "dss.DocumentHash": {
+        "xmldsig.DigestMethod": {
+          "@Algorithm": "http://www.w3.org/2001/04/xmlenc#sha256"
+        },
+        "xmldsig.DigestValue": "GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA="
+      }
+    }
+  }
+}</con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Accept" value="application/json" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>Accept</con:entry></con:parameterOrder></con:request><con:request name="JSON Timestamp [asynch]" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint><con:request>{
+  "dss.SignRequest": {
+    "@RequestID": "${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}",
+    "@Profile": "urn:com:swisscom:dss:v1.0",
+    "dss.OptionalInputs": {
+      "dss.ClaimedIdentity": {
+        "dss.Name": "cartel.ch"
+      },
+      "dss.SignatureType": "urn:ietf:rfc:3161",
+      "dss.AdditionalProfile": [
+            "urn:oasis:names:tc:dss:1.0:profiles:timestamping",
+            "urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing"
+        ]
+    },
+    "dss.InputDocuments": {
+      "dss.DocumentHash": {
+        "xmldsig.DigestMethod": {
+          "@Algorithm": "http://www.w3.org/2001/04/xmlenc#sha256"
+        },
+        "xmldsig.DigestValue": "GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA="
+      }
+    }
+  }
+}</con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder><con:entry/></con:parameterOrder></con:request></con:method></con:resource></con:resource></con:interface><con:testSuite name="REGRESSION"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Timestamps" searchProperties="true" id="acc25e33-9db9-4a26-9236-6f18a75ba286" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="request" name="Timestamp 256 [synch]" id="9ceff850-35cc-48fc-8942-e5728602154b"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp 256 [synch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
    <soap:Body>
       <ais:sign>
          <SignRequest RequestID="${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}" Profile="urn:com:swisscom:dss:v1.0">
@@ -1987,7 +3695,7 @@ declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
       <RFC3161TimeStampToken>*</RFC3161TimeStampToken>
     </Timestamp>
   </SignatureObject>
-</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Timestamp BATCH [synch]"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp BATCH [synch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Timestamp BATCH [synch]" id="112d4473-5726-4bca-9241-9c9e3c23edda"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp BATCH [synch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
    <soap:Body>
       <ais:sign>
          <SignRequest RequestID="${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}" Profile="urn:com:swisscom:dss:v1.0">
@@ -2054,7 +3762,7 @@ declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
       </ns5:SignatureObjects>
     </Other>
   </SignatureObject>
-</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Timestamp BATCH [asynch]"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp BATCH [asynch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Timestamp BATCH [asynch]" id="b24b180f-c7b0-4b8c-b46b-696807420950"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp BATCH [asynch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
    <soap:Body>
       <ais:sign>
          <SignRequest RequestID="${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}" Profile="urn:com:swisscom:dss:v1.0">
@@ -2104,14 +3812,14 @@ declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
   <OptionalOutputs>
     <ns3:ResponseID>*</ns3:ResponseID>
   </OptionalOutputs>
-</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>ID</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Timestamp BATCH [asynch]</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Get ResponseID" id="aac260de-1cce-4fc9-bca8-e1eb13c388f4"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>ID</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Timestamp BATCH [asynch]</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace ns1='urn:oasis:names:tc:dss:1.0:core:schema';
 declare namespace ns5='urn:com:swisscom:dss:1.0:schema';
 declare namespace ns4='http://service.ais.swisscom.com/';
 declare namespace ns3='urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0';
 declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
 
-//soap:Envelope/soap:Body/ns4:signResponse/ns1:SignResponse/ns1:OptionalOutputs/ns3:ResponseID</con:sourcePath><con:targetType>tmp_ResponseID</con:targetType><con:targetStep>#TestSuite#</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="delay" name="Entry Point 1"><con:settings/><con:config><delay>500</delay></con:config></con:testStep><con:testStep type="request" name="Pending Timestamp BATCH"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Pending Timestamp BATCH"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asynch="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/">
+//soap:Envelope/soap:Body/ns4:signResponse/ns1:SignResponse/ns1:OptionalOutputs/ns3:ResponseID</con:sourcePath><con:targetType>tmp_ResponseID</con:targetType><con:targetStep>#TestSuite#</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="delay" name="PollDelay" id="cf13b9da-cc18-4f76-9311-a75077459b01"><con:settings/><con:config><delay>500</delay></con:config></con:testStep><con:testStep type="request" name="Pending Timestamp BATCH" id="c221a120-3d55-4b9d-b54d-f024154590aa"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Pending Timestamp BATCH"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asynch="urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/">
    <soap:Body>
       <ais:pending>
          <asynch:PendingRequest Profile="urn:com:swisscom:dss:v1.0">
@@ -2138,21 +3846,14 @@ declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
   <OptionalOutputs>
     <ns3:ResponseID>*</ns3:ResponseID>
   </OptionalOutputs>
-</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Conditional Goto"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>NotYetReady</con:name><con:type>XPATH</con:type><con:expression>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+</SignResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Check if Pending" id="6c91fd62-0c9d-4226-885c-f86ae70d9cb6"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>Repeat</con:name><con:type>XPATH</con:type><con:expression>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace ns1='urn:oasis:names:tc:dss:1.0:core:schema';
 declare namespace ns5='urn:com:swisscom:dss:1.0:schema';
 declare namespace ns4='http://service.ais.swisscom.com/';
 declare namespace ns3='urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0';
 declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
 
-not(matches (//mreg:Parameter[@Name="CurrentActivationStep"]/@Value, 'KEYS_GENERATION'))</con:expression><con:targetStep>Entry Point 1</con:targetStep></con:condition><con:condition><con:name>Ready</con:name><con:type>XPATH</con:type><con:expression>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace ns1='urn:oasis:names:tc:dss:1.0:core:schema';
-declare namespace ns5='urn:com:swisscom:dss:1.0:schema';
-declare namespace ns4='http://service.ais.swisscom.com/';
-declare namespace ns3='urn:oasis:names:tc:dss:1.0:profiles:asynchronousprocessing:1.0';
-declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
-
-matches (//mreg:Parameter[@Name="CurrentActivationStep"]/@Value, 'KEYS_GENERATION')</con:expression><con:targetStep>Timestamp UnknownCustomer [synch]</con:targetStep></con:condition></con:config></con:testStep><con:testStep type="request" name="Timestamp UnknownCustomer [synch]"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp UnknownCustomer [synch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+matches(//ns1:ResultMajor/text(),'pending')</con:expression><con:targetStep>PollDelay</con:targetStep></con:condition></con:config></con:testStep><con:testStep type="request" name="Timestamp UnknownCustomer [synch]" id="cb6fa0dd-e377-4038-af3d-54457c748cb4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Timestamp UnknownCustomer [synch]"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ais="http://service.ais.swisscom.com/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
    <soap:Body>
       <ais:sign>
          <SignRequest RequestID="${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}" Profile="urn:com:swisscom:dss:v1.0">
@@ -2183,4 +3884,24 @@ declare namespace ns2='http://www.w3.org/2000/09/xmldsig#';
   <ResultMajor>urn:oasis:names:tc:dss:1.0:resultmajor:RequesterError</ResultMajor>
   <ResultMinor>urn:com:swisscom:dss:1.0:resultminor:UnknownCustomer</ResultMinor>
   <ResultMessage xml:lang="en"/>
-</Result>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>AP_ID</con:name><con:value>cartel.ch</con:value></con:property><con:property><con:name>STATIC_ID</con:name><con:value>:kp2-cartel.ch</con:value></con:property><con:property><con:name>ONDEMAND_QUALIFIED</con:name><con:value>:OnDemand-Qualified</con:value></con:property><con:property><con:name>ONDEMAND_ADVANCED</con:name><con:value>:OnDemand-Advanced</con:value></con:property><con:property><con:name>MSISDN</con:name><con:value>41793083455</con:value></con:property><con:property><con:name>SHA224</con:name><con:value>http://www.w3.org/2001/04/xmldsig-more#sha224</con:value></con:property><con:property><con:name>SHA256</con:name><con:value>http://www.w3.org/2001/04/xmlenc#sha256</con:value></con:property><con:property><con:name>SHA384</con:name><con:value>http://www.w3.org/2001/04/xmldsig-more#sha384</con:value></con:property><con:property><con:name>SHA512</con:name><con:value>http://www.w3.org/2001/04/xmlenc#sha512</con:value></con:property><con:property><con:name>DIGEST_224</con:name><con:value>YyNmU8FIXM0wNgdcmZyJIW1S3f8KbOcN8Ulgzw==</con:value></con:property><con:property><con:name>DIGEST_256</con:name><con:value>1WON4H3Hrinf7LYRNmhV6Uf7apdUvuYEsmhxAklxumA=</con:value></con:property><con:property><con:name>DIGEST_384</con:name><con:value>be5JJtVMoZqkJ3isZaBBpwXXQtV4Opqf3KtYcHacCh7fVZ1bS8VSnMnK3z9mIy1R</con:value></con:property><con:property><con:name>DIGEST_512</con:name><con:value>FsntfB/ATHb1O7HlxpB4l9L+1vkgCOki3omkM6jJVnxXDRRgd1uZ7S/GkLPkFEUJ+SDllcWWjDNJHJcnkritGg==</con:value></con:property><con:property><con:name>tmp_ResponseID</con:name><con:value>096038b7-f82c-478a-964d-141995e77861</con:value></con:property></con:properties></con:testSuite><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
+</Result>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="restrequest" name="JSON Timestamp [synch]"><con:settings/><con:config service="AIS Signing Service" methodName="POST" resourcePath="/DSS-Server/rs/v1.0/sign" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="JSON Timestamp [synch]" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch</con:endpoint><con:request>{
+  "dss.SignRequest": {
+    "@RequestID": "${=new Date().format('yyyy-MM-dd')}T${=new Date().format('HH:mm:ss.SSS')}",
+    "@Profile": "urn:com:swisscom:dss:v1.0",
+    "dss.OptionalInputs": {
+      "dss.ClaimedIdentity": {
+        "dss.Name": "cartel.ch"
+      },
+      "dss.SignatureType": "urn:ietf:rfc:3161",
+      "dss.AdditionalProfile": "urn:oasis:names:tc:dss:1.0:profiles:timestamping"
+    },
+    "dss.InputDocuments": {
+      "dss.DocumentHash": {
+        "xmldsig.DigestMethod": {
+          "@Algorithm": "http://www.w3.org/2001/04/xmlenc#sha256"
+        },
+        "xmldsig.DigestValue": "GcXfOzOP8GsBu7odeT1w3GnMedppEWvngCQ7Ef1IBMA="
+      }
+    }
+  }
+}</con:request><con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Simple Contains" name="Contains"><con:configuration><token>"dss.ResultMajor":"urn:oasis:names:tc:dss:1.0:resultmajor:Success"</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Accept" value="application/json" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry/></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Static" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="request" name="Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Test Request"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request xsi:nil="true"/><con:assertion type="SOAP Response"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="OnDemand Non-MID" searchProperties="true"><con:settings/><con:testStep type="request" name="Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Test Request"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request xsi:nil="true"/><con:assertion type="SOAP Response"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="OnDemand MID" searchProperties="true"><con:settings/><con:testStep type="request" name="Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DigitalSignatureServiceSoapBinding</con:interface><con:operation>sign</con:operation><con:request name="Test Request"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://ais.pre.swissdigicert.ch/DSS-Server/ws</con:endpoint><con:request xsi:nil="true"/><con:assertion type="SOAP Response"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>AP_ID</con:name><con:value>cartel.ch</con:value></con:property><con:property><con:name>STATIC_ID</con:name><con:value>:kp2-cartel.ch</con:value></con:property><con:property><con:name>ONDEMAND_QUALIFIED</con:name><con:value>:OnDemand-Qualified</con:value></con:property><con:property><con:name>ONDEMAND_ADVANCED</con:name><con:value>:OnDemand-Advanced</con:value></con:property><con:property><con:name>MSISDN</con:name><con:value>41793083455</con:value></con:property><con:property><con:name>SHA224</con:name><con:value>http://www.w3.org/2001/04/xmldsig-more#sha224</con:value></con:property><con:property><con:name>SHA256</con:name><con:value>http://www.w3.org/2001/04/xmlenc#sha256</con:value></con:property><con:property><con:name>SHA384</con:name><con:value>http://www.w3.org/2001/04/xmldsig-more#sha384</con:value></con:property><con:property><con:name>SHA512</con:name><con:value>http://www.w3.org/2001/04/xmlenc#sha512</con:value></con:property><con:property><con:name>DIGEST_224</con:name><con:value>YyNmU8FIXM0wNgdcmZyJIW1S3f8KbOcN8Ulgzw==</con:value></con:property><con:property><con:name>DIGEST_256</con:name><con:value>1WON4H3Hrinf7LYRNmhV6Uf7apdUvuYEsmhxAklxumA=</con:value></con:property><con:property><con:name>DIGEST_384</con:name><con:value>be5JJtVMoZqkJ3isZaBBpwXXQtV4Opqf3KtYcHacCh7fVZ1bS8VSnMnK3z9mIy1R</con:value></con:property><con:property><con:name>DIGEST_512</con:name><con:value>FsntfB/ATHb1O7HlxpB4l9L+1vkgCOki3omkM6jJVnxXDRRgd1uZ7S/GkLPkFEUJ+SDllcWWjDNJHJcnkritGg==</con:value></con:property><con:property><con:name>tmp_ResponseID</con:name><con:value>c086e98c-5951-46ad-ac2a-7f21b8d7be88</con:value></con:property></con:properties></con:testSuite><con:properties><con:property><con:name>sd</con:name><con:value>dsfdsfds</con:value></con:property></con:properties><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
