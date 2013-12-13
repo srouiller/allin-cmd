@@ -115,13 +115,13 @@ MID_LANG=$7                                     # Optional Language
 if [ "$MID_MSISDN" != "" ]; then                # MobileID step up?
   case "$MSGTYPE" in
     SOAP|XML) 
-      MID="<ns5:StepUpAuthorisation>
-             <ns5:MobileID>
-               <ns5:MSISDN>$MID_MSISDN</ns5:MSISDN>
-               <ns5:Message>$MID_MSG</ns5:Message>
-               <ns5:Language>$MID_LANG</ns5:Language>
-             </ns5:MobileID>
-           </ns5:StepUpAuthorisation>" ;;
+      MID="<sc:StepUpAuthorisation>
+             <sc:MobileID>
+               <sc:MSISDN>$MID_MSISDN</sc:MSISDN>
+               <sc:Message>$MID_MSG</sc:Message>
+               <sc:Language>$MID_LANG</sc:Language>
+             </sc:MobileID>
+           </sc:StepUpAuthorisation>" ;;
     JSON) 
       MID=',"sc.StepUpAuthorisation": {
               "sc.MobileID": {
@@ -137,34 +137,35 @@ case "$MSGTYPE" in
   # MessageType is SOAP. Define the Request
   SOAP)
     REQ_SOAP='<?xml version="1.0" encoding="UTF-8"?>
-    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
+                   xmlns:ais="http://service.ais.swisscom.com/"
+                   xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"   
+                   xmlns:sc="urn:com:swisscom:dss:1.0:schema">
       <soap:Body>
-        <ns4:sign xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
-                  xmlns:ns2="http://www.w3.org/2000/09/xmldsig#"
-                  xmlns:ns4="http://service.ais.swisscom.com/"
-                  xmlns:ns5="urn:com:swisscom:dss:1.0:schema">
+        <ais:sign>
           <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0">
-            <InputDocuments>
-              <DocumentHash>
-                <ns2:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
-                <ns2:DigestValue>'$DIGEST_VALUE'</ns2:DigestValue>
-              </DocumentHash>
-            </InputDocuments>
             <OptionalInputs>
-              <SignatureType>urn:ietf:rfc:3369</SignatureType>
               <ClaimedIdentity>
                 <Name>'$AP_ID'</Name>
               </ClaimedIdentity>
+              <SignatureType>urn:ietf:rfc:3369</SignatureType>
               <AdditionalProfile>urn:com:swisscom:dss:v1.0:profiles:ondemandcertificate</AdditionalProfile>
-              <ns5:CertificateRequest>
-                <ns5:DistinguishedName>'$ONDEMAND_DN'</ns5:DistinguishedName>
+              <sc:CertificateRequest>
+                <sc:DistinguishedName>'$ONDEMAND_DN'</sc:DistinguishedName>
                 '$MID'
-              </ns5:CertificateRequest>
-              <ns5:AddOcspResponse Type="urn:ietf:rfc:2560"/>
+              </sc:CertificateRequest>
               <AddTimestamp Type="urn:ietf:rfc:3161"/>
+              <sc:AddOcspResponse Type="urn:ietf:rfc:2560"/>
             </OptionalInputs>
+            <InputDocuments>
+              <DocumentHash>
+                <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
+                <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
+              </DocumentHash>
+            </InputDocuments>
           </SignRequest>
-        </ns4:sign>
+        </ais:sign>
       </soap:Body>
     </soap:Envelope>'
     # store into file
@@ -174,26 +175,26 @@ case "$MSGTYPE" in
   XML)
     REQ_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0" 
-                 xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" 
-                 xmlns="urn:oasis:names:tc:dss:1.0:core:schema" 
-                 xmlns:ns5="urn:com:swisscom:dss:1.0:schema">
+                 xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
+                 xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"   
+                 xmlns:sc="urn:com:swisscom:dss:1.0:schema">
         <OptionalInputs>
             <ClaimedIdentity>
                 <Name>'$AP_ID'</Name>
             </ClaimedIdentity>
-            <AdditionalProfile>urn:com:swisscom:dss:v1.0:profiles:ondemandcertificate</AdditionalProfile>
             <SignatureType>urn:ietf:rfc:3369</SignatureType>
-            <ns5:CertificateRequest>
-                <ns5:DistinguishedName>'$ONDEMAND_DN'</ns5:DistinguishedName>
+            <AdditionalProfile>urn:com:swisscom:dss:v1.0:profiles:ondemandcertificate</AdditionalProfile>  
+            <sc:CertificateRequest>
+                <sc:DistinguishedName>'$ONDEMAND_DN'</sc:DistinguishedName>
                 '$MID'
-            </ns5:CertificateRequest>
-            <ns5:AddOcspResponse Type="urn:ietf:rfc:2560"/>
+            </sc:CertificateRequest>
             <AddTimestamp Type="urn:ietf:rfc:3161"/>
+            <sc:AddOcspResponse Type="urn:ietf:rfc:2560"/>
         </OptionalInputs>
         <InputDocuments>
             <DocumentHash>
-                <ns2:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
-                <ns2:DigestValue>'$DIGEST_VALUE'</ns2:DigestValue>
+                <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
+                <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
             </DocumentHash>
         </InputDocuments>
     </SignRequest>'
@@ -208,14 +209,14 @@ case "$MSGTYPE" in
         "@Profile": "urn:com:swisscom:dss:v1.0",
         "dss.OptionalInputs": {
           "dss.ClaimedIdentity": {"dss.Name": "'$AP_ID'"},
-          "dss.AdditionalProfile": "urn:com:swisscom:dss:v1.0:profiles:ondemandcertificate",
           "dss.SignatureType": "urn:ietf:rfc:3369",
+          "dss.AdditionalProfile": "urn:com:swisscom:dss:v1.0:profiles:ondemandcertificate", 
           "sc.CertificateRequest": {
             "sc.DistinguishedName": "'$ONDEMAND_DN'" 
             '$MID'
             },
-          "sc.AddOcspResponse": {"@Type": "urn:ietf:rfc:2560"},
-          "dss.AddTimestamp": { "@Type": "urn:ietf:rfc:3161" }
+          "dss.AddTimestamp": {"@Type": "urn:ietf:rfc:3161"},
+          "sc.AddOcspResponse": {"@Type": "urn:ietf:rfc:2560"}
           },
         "dss.InputDocuments": {"dss.DocumentHash": {
           "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},

@@ -100,27 +100,28 @@ case "$MSGTYPE" in
   # MessageType is SOAP. Define the Request
   SOAP)
     REQ_SOAP='<?xml version="1.0" encoding="UTF-8"?>
-    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
+                   xmlns:ais="http://service.ais.swisscom.com/"
+                   xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"   
+                   xmlns:sc="urn:com:swisscom:dss:1.0:schema">
       <soap:Body>
-        <ais:sign xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
-                  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-                  xmlns:ais="http://service.ais.swisscom.com/"
-                  xmlns:ns5="urn:com:swisscom:dss:1.0:schema">
+        <ais:sign>
           <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0">
+            <OptionalInputs>
+              <ClaimedIdentity Format="urn:com:swisscom:dss:v1.0:entity">
+                <Name>'$AP_ID'</Name>
+              </ClaimedIdentity>
+              <SignatureType>urn:ietf:rfc:3369</SignatureType>
+              <AddTimestamp Type="urn:ietf:rfc:3161"/>
+              <sc:AddOcspResponse Type="urn:ietf:rfc:2560"/>
+            </OptionalInputs>
             <InputDocuments>
               <DocumentHash>
                 <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
                 <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
               </DocumentHash>
             </InputDocuments>
-            <OptionalInputs>
-              <ClaimedIdentity Format="urn:com:swisscom:dss:v1.0:entity">
-                <Name>'$AP_ID'</Name>
-              </ClaimedIdentity>
-              <SignatureType>urn:ietf:rfc:3369</SignatureType>
-              <ns5:AddOcspResponse Type="urn:ietf:rfc:2560"/>
-              <AddTimestamp Type="urn:ietf:rfc:3161"/>
-            </OptionalInputs>
           </SignRequest>
         </ais:sign>
       </soap:Body>
@@ -132,21 +133,21 @@ case "$MSGTYPE" in
   XML)
     REQ_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0"
-                 xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" 
                  xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
-                 xmlns:ns5="urn:com:swisscom:dss:1.0:schema">
+                 xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"   
+                 xmlns:sc="urn:com:swisscom:dss:1.0:schema">
         <OptionalInputs>
             <ClaimedIdentity>
                 <Name>'$AP_ID'</Name>
             </ClaimedIdentity>
             <SignatureType>urn:ietf:rfc:3369</SignatureType>
-            <ns5:AddOcspResponse Type="urn:ietf:rfc:2560"/>
             <AddTimestamp Type="urn:ietf:rfc:3161"/>
+            <sc:AddOcspResponse Type="urn:ietf:rfc:2560"/>
         </OptionalInputs>
         <InputDocuments>
             <DocumentHash>
-                <ns2:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
-                <ns2:DigestValue>'$DIGEST_VALUE'</ns2:DigestValue>
+                <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
+                <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
             </DocumentHash>
         </InputDocuments>
     </SignRequest>'
@@ -154,7 +155,7 @@ case "$MSGTYPE" in
     echo "$REQ_XML" > $REQ ;;
     
   # MessageType is JSON. Define the Request
-  JSON)s
+  JSON)
     REQ_JSON='{
     "dss.SignRequest": {
         "@RequestID": "'$REQUESTID'",
@@ -162,8 +163,8 @@ case "$MSGTYPE" in
         "dss.OptionalInputs": {
             "dss.ClaimedIdentity": {"dss.Name": "'$AP_ID'"},
             "dss.SignatureType": "urn:ietf:rfc:3369",
-            "sc.AddOcspResponse": {"@Type": "urn:ietf:rfc:2560"},
-            "dss.AddTimestamp": { "@Type": "urn:ietf:rfc:3161" }
+            "dss.AddTimestamp": {"@Type": "urn:ietf:rfc:3161"},
+            "sc.AddOcspResponse": {"@Type": "urn:ietf:rfc:2560"}
         },
         "dss.InputDocuments": {"dss.DocumentHash": {
             "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},

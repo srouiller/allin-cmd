@@ -100,18 +100,13 @@ case "$MSGTYPE" in
   # MessageType is SOAP. Define the Request
   SOAP)
     REQ_SOAP='<?xml version="1.0" encoding="UTF-8"?>
-    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
+                   xmlns:ais="http://service.ais.swisscom.com/"
+                   xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
       <soap:Body>
-        <ais:sign xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
-                  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-                  xmlns:ais="http://service.ais.swisscom.com/">
+        <ais:sign>
           <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0">
-            <InputDocuments>
-              <DocumentHash>
-                <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
-                <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
-              </DocumentHash>
-            </InputDocuments>
             <OptionalInputs>
               <ClaimedIdentity Format="urn:com:swisscom:dss:v1.0:entity">
                 <Name>'$AP_ID'</Name>
@@ -119,6 +114,12 @@ case "$MSGTYPE" in
               <SignatureType>urn:ietf:rfc:3161</SignatureType>
               <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
             </OptionalInputs>
+            <InputDocuments>
+              <DocumentHash>
+                <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
+                <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
+              </DocumentHash>
+            </InputDocuments>
           </SignRequest>
         </ais:sign>
       </soap:Body>
@@ -130,19 +131,19 @@ case "$MSGTYPE" in
   XML)
     REQ_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <SignRequest RequestID="'$REQUESTID'" Profile="urn:com:swisscom:dss:v1.0"
-                 xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" 
-                 xmlns="urn:oasis:names:tc:dss:1.0:core:schema">
+                 xmlns="urn:oasis:names:tc:dss:1.0:core:schema"
+                 xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
         <OptionalInputs>
             <ClaimedIdentity>
                 <Name>'$AP_ID'</Name>
             </ClaimedIdentity>
-            <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
             <SignatureType>urn:ietf:rfc:3161</SignatureType>
+            <AdditionalProfile>urn:oasis:names:tc:dss:1.0:profiles:timestamping</AdditionalProfile>
         </OptionalInputs>
         <InputDocuments>
             <DocumentHash>
-                <ns2:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
-                <ns2:DigestValue>'$DIGEST_VALUE'</ns2:DigestValue>
+                <dsig:DigestMethod Algorithm="'$DIGEST_ALGO'"/>
+                <dsig:DigestValue>'$DIGEST_VALUE'</dsig:DigestValue>
             </DocumentHash>
         </InputDocuments>
     </SignRequest>'
@@ -157,11 +158,11 @@ case "$MSGTYPE" in
         "@Profile": "urn:com:swisscom:dss:v1.0",
         "dss.OptionalInputs": {
             "dss.ClaimedIdentity": {"dss.Name": "'$AP_ID'"},
-            "dss.AdditionalProfile": "urn:oasis:names:tc:dss:1.0:profiles:timestamping",
-            "dss.SignatureType": "urn:ietf:rfc:3161"
+            "dss.SignatureType": "urn:ietf:rfc:3161",
+            "dss.AdditionalProfile": "urn:oasis:names:tc:dss:1.0:profiles:timestamping"
         },
         "dss.InputDocuments": {"dss.DocumentHash": {
-            "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO' sd sd sdf"},
+            "xmldsig.DigestMethod": {"@Algorithm": "'$DIGEST_ALGO'"},
             "xmldsig.DigestValue": "'$DIGEST_VALUE'"
           }
         }
