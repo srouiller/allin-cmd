@@ -4,7 +4,7 @@ allin-cmd: SoapUI Project
 ### Introduction
 
 SoapUI is an open source web service testing application for service-oriented architectures (SOA). Its functionality covers web service inspection, invoking, development, simulation and mocking, functional testing, load and compliance testing. SoapUI has been given a number of awards.
-You can get SoapUI at http://sourceforge.net/projects/soapui/
+You can get SoapUI (Windows/Mac/Linux) at http://sourceforge.net/projects/soapui/
 
 A SoapUI Project has been created that contains example requests to invoke:
 * TSA Signature Request
