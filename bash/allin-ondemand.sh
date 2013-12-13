@@ -79,7 +79,7 @@ SSL_CA=$PWD/allin-ssl.crt                       # Bag file for SSL server connec
 # Create temporary request
 INSTANT=$(date +%Y-%m-%dT%H:%M:%S.%N%:z)        # Define instant and request id
 REQUESTID=ALLIN.TEST.$INSTANT
-REQ=$(mktemp /tmp/_tmp.XXXXXX)                  # Request goes here
+TMP=$(mktemp -u /tmp/_tmp.XXXXXX)                  # Request goes here
 TIMEOUT_CON=90                                  # Timeout of the client connection
 
 # Hash and digests
@@ -169,7 +169,7 @@ case "$MSGTYPE" in
       </soap:Body>
     </soap:Envelope>'
     # store into file
-    echo "$REQ_SOAP" > $REQ ;;
+    echo "$REQ_SOAP" > $TMP.req ;;
 
   # MessageType is XML. Define the Request
   XML)
@@ -199,7 +199,7 @@ case "$MSGTYPE" in
         </InputDocuments>
     </SignRequest>'
     # store into file
-    echo "$REQ_XML" > $REQ ;;
+    echo "$REQ_XML" > $TMP.req ;;
     
   # MessageType is JSON. Define the Request
   JSON)
@@ -226,7 +226,7 @@ case "$MSGTYPE" in
       }
     }'
     # store into file
-    echo "$REQ_JSON" > $REQ ;;
+    echo "$REQ_JSON" > $TMP.req ;;
     
   # Unknown message type
   *)
@@ -260,10 +260,10 @@ esac
 
 # Call the service
 http_code=$(curl --write-out '%{http_code}\n' --sslv3 --silent \
-  $CURL_OPTIONS @$REQ \
+  $CURL_OPTIONS @$TMP.req \
   --header "${HEADER_ACCEPT}" --header "${HEADER_CONTENT_TYPE}" \
   --cert $CERT_FILE --cacert $SSL_CA --key $CERT_KEY \
-  --output $REQ.res --trace-ascii $REQ.log \
+  --output $TMP.rsp --trace-ascii $TMP.curl.log \
   --connect-timeout $TIMEOUT_CON \
   $URL)
 
@@ -274,28 +274,28 @@ if [ "$RC" = "0" -a "$http_code" = "200" ]; then
   case "$MSGTYPE" in
     SOAP|XML)
       # SOAP/XML Parse Result
-      RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $REQ.res)
-      RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $REQ.res)
-      RES_MSG=$(cat $REQ.res | tr '\n' ' ' | sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p')
-      sed -n -e 's/.*<Base64Signature.*>\(.*\)<\/Base64Signature>.*/\1/p' $REQ.res > $REQ.sig ;;
+      RES_MAJ=$(sed -n -e 's/.*<ResultMajor>\(.*\)<\/ResultMajor>.*/\1/p' $TMP.rsp)
+      RES_MIN=$(sed -n -e 's/.*<ResultMinor>\(.*\)<\/ResultMinor>.*/\1/p' $TMP.rsp)
+      RES_MSG=$(cat $TMP.rsp | tr '\n' ' ' | sed -n -e 's/.*<ResultMessage.*>\(.*\)<\/ResultMessage>.*/\1/p')
+      sed -n -e 's/.*<Base64Signature.*>\(.*\)<\/Base64Signature>.*/\1/p' $TMP.rsp > $TMP.sig.base64 ;;
     JSON)
       # JSON Parse Result
-      RES_MAJ=$(sed -n -e 's/^.*"dss.ResultMajor":"\([^"]*\)".*$/\1/p' $REQ.res)
-      RES_MIN=$(sed -n -e 's/^.*"dss.ResultMinor":"\([^"]*\)".*$/\1/p' $REQ.res)
-      RES_MSG=$(cat $REQ.res | sed 's/\\\//\//g' | sed 's/\\n/ /g' | sed -n -e 's/^.*"dss.ResultMessage":{\([^}]*\)}.*$/\1/p')
-      sed -n -e 's/^.*"dss.Base64Signature":{"@Type":"urn:ietf:rfc:3369","$":"\([^"]*\)".*$/\1/p' $REQ.res | sed 's/\\//g' > $REQ.sig ;;
+      RES_MAJ=$(sed -n -e 's/^.*"dss.ResultMajor":"\([^"]*\)".*$/\1/p' $TMP.rsp)
+      RES_MIN=$(sed -n -e 's/^.*"dss.ResultMinor":"\([^"]*\)".*$/\1/p' $TMP.rsp)
+      RES_MSG=$(cat $TMP.rsp | sed 's/\\\//\//g' | sed 's/\\n/ /g' | sed -n -e 's/^.*"dss.ResultMessage":{\([^}]*\)}.*$/\1/p')
+      sed -n -e 's/^.*"dss.Base64Signature":{"@Type":"urn:ietf:rfc:3369","$":"\([^"]*\)".*$/\1/p' $TMP.rsp | sed 's/\\//g' > $TMP.sig.base64 ;;
   esac 
 
-  if [ -s "${REQ}.sig" ]; then
+  if [ -s "${TMP}.sig.base64" ]; then
     # Decode signature if present
-    base64 --decode  $REQ.sig > $REQ.sig.decoded
-    [ -s "${REQ}.sig.decoded" ] || error "Unable to decode Base64Signature"
+    base64 --decode  $TMP.sig.base64 > $TMP.sig.der
+    [ -s "${TMP}.sig.der" ] || error "Unable to decode Base64Signature"
     # Save PKCS7 content to target
-    openssl pkcs7 -inform der -in $REQ.sig.decoded -out $PKCS7_RESULT
+    openssl pkcs7 -inform der -in $TMP.sig.der -out $PKCS7_RESULT
     # Extract the signers certificate
-    openssl pkcs7 -inform der -in $REQ.sig.decoded -out $REQ.sig.cert -print_certs
-    [ -s "${REQ}.sig.cert" ] || error "Unable to extract signers certificate from signature"
-    RES_ID_CERT=$(openssl x509 -subject -noout -in $REQ.sig.cert)
+    openssl pkcs7 -inform der -in $TMP.sig.der -out $TMP.sig.certificates.pem -print_certs
+    [ -s "${TMP}.sig.certificates.pem" ] || error "Unable to extract signers certificate from signature"
+    RES_ID_CERT=$(openssl x509 -subject -noout -in $TMP.sig.certificates.pem)
   fi
 
   # Status and results
@@ -327,22 +327,20 @@ fi
 
 # Debug details
 if [ "$DEBUG" != "" ]; then
-  [ -f "$REQ" ] && echo ">>> $REQ <<<" && cat $REQ | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || python -m json.tool )
-  [ -f "$REQ.log" ] && echo ">>> $REQ.log <<<" && cat $REQ.log | grep '==\|error'
-  [ -f "$REQ.res" ] && echo ">>> $REQ.res <<<" && cat $REQ.res | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || python -m json.tool ) 
+  [ -f "$TMP.req" ] && echo ">>> $TMP.req <<<" && cat $TMP.req | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || python -m json.tool )
+  [ -f "$TMP.curl.log" ] && echo ">>> $TMP.curl.log <<<" && cat $TMP.curl.log | grep '==\|error'
+  [ -f "$TMP.rsp" ] && echo ">>> $TMP.rsp <<<" && cat $TMP.rsp | ( [ "$MSGTYPE" != "JSON" ] && xmllint --format - || python -m json.tool ) 
   echo ""
 fi
 
 # Cleanups if not DEBUG mode
 if [ "$DEBUG" = "" ]; then
-  [ -f "$REQ" ] && rm $REQ
-  [ -f "$REQ.log" ] && rm $REQ.log
-  [ -f "$REQ.res" ] && rm $REQ.res
-  [ -f "$REQ.sig" ] && rm $REQ.sig
-  [ -f "$REQ.sig.decoded" ] && rm $REQ.sig.decoded
-  [ -f "$REQ.sig.cert" ] && rm $REQ.sig.cert
-  [ -f "$REQ.sig.cert.check" ] && rm $REQ.sig.cert.check
-  [ -f "$REQ.sig.txt" ] && rm $REQ.sig.txt
+  [ -f "$TMP.req" ] && rm $TMP.req
+  [ -f "$TMP.curl.log" ] && rm $TMP.curl.log
+  [ -f "$TMP.rsp" ] && rm $TMP.rsp
+  [ -f "$TMP.sig.base64" ] && rm $TMP.sig.base64
+  [ -f "$TMP.sig.der" ] && rm $TMP.sig.der
+  [ -f "$TMP.sig.certificates.pem" ] && rm $TMP.sig.certificates.pem
 fi
 
 exit $RC
