@@ -20,3 +20,5 @@ Thumbs.db
 
 # PyCharm #
 .idea/*
+
+*.jks
