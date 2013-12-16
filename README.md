@@ -1,7 +1,7 @@
 allin-cmd
 ============
 
-All-in command line tools
+All-in command line tools 
 
 ## bash
 
